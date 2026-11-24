@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>超せっかち・海外バイト先店長｜英語リスニング＆会話・壁打ち特化</title>
+<meta name="description" content="超せっかち店長の早口英語を聞き取り、3秒で切り返す英語リスニング＆会話の壁打ちアプリ。高校受験・共通テスト・難関大・社会人実務まで全24問。ディクテーション、シャドーイング、間隔反復つき。">
+<meta property="og:title" content="超せっかち・海外バイト先店長">
+<meta property="og:description" content="早口英語をさばいてチップを稼げ。聞き取り、切り返し、ディクテーションまで鍛える実戦リスニング。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="og-image.png">
+<link rel="icon" href="icon-180.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>
+:root{
+  --ink:#23272f; --paper:#f6f2e7; --paper2:#fffdf6;
+  --navy:#16324f; --navy2:#1f4a73; --teal:#0e7c7b; --gold:#c9962e; --gold2:#eec25e;
+  --good:#1e8e4f; --good2:#27ae60; --bad:#b91c1c; --bad2:#dc2626;
+  --shadow:0 4px 14px rgba(31,36,48,.16);
+  --ch1:#2563eb; --ch2:#0e7c7b; --ch3:#7c3aed; --ch4:#b45309;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+  background:#0d1622 radial-gradient(circle at 15% 0%, #274b73 0%, transparent 55%),
+             radial-gradient(circle at 90% 100%, #4d3410 0%, transparent 50%);
+  color:var(--ink); min-height:100vh;
+}
+#app{max-width:560px;margin:0 auto;min-height:100vh;background:var(--paper);
+  box-shadow:0 0 40px rgba(0,0,0,.45); position:relative; overflow:hidden;
+  display:flex; flex-direction:column;}
+.screen{display:none; flex-direction:column; flex:1; min-height:0;}
+.screen.active{display:flex;}
+button{font-family:inherit; cursor:pointer;}
+.btn{
+  border:none; border-radius:999px; padding:14px 22px; font-size:17px; font-weight:800;
+  background:linear-gradient(180deg,var(--navy2),var(--navy)); color:#fff;
+  box-shadow:0 4px 0 #0b1e33, var(--shadow); transition:transform .06s, box-shadow .06s;
+}
+.btn:active{transform:translateY(3px); box-shadow:0 1px 0 #0b1e33;}
+.btn.sub{background:linear-gradient(180deg,#fdfdfd,#eae4cf); color:var(--ink); box-shadow:0 4px 0 #b3a888, var(--shadow);}
+.btn.sub:active{box-shadow:0 1px 0 #b3a888;}
+.btn.gold{background:linear-gradient(180deg,var(--gold2),var(--gold)); color:#4a2f00; box-shadow:0 4px 0 #8a6410, var(--shadow);}
+.btn.gold:active{box-shadow:0 1px 0 #8a6410;}
+.btn:disabled{opacity:.45; pointer-events:none;}
+.btn.big{font-size:19px; padding:15px 26px; width:100%;}
+.btn.small{font-size:14px; padding:9px 16px;}
+.sound-toggle{
+  border:2px solid var(--ink); background:#fff; border-radius:999px; padding:6px 14px;
+  font-size:14px; font-weight:800; flex:none;
+}
+.topbar{
+  display:flex; align-items:center; gap:8px; padding:10px 14px;
+  background:var(--paper2); border-bottom:2px solid #e7ddc2; position:sticky; top:0; z-index:5;
+}
+.topbar .tb-title{font-weight:900; font-size:15px; flex:1; line-height:1.3;}
+.back-btn{
+  border:2px solid var(--ink); background:#fff; border-radius:999px; padding:6px 13px;
+  font-size:13.5px; font-weight:800; flex:none;
+}
+.scroll-body{overflow-y:auto; flex:1; min-height:0; padding-bottom:20px;}
+/* ---------- タイトル ---------- */
+#screen-title{padding:26px 18px 14px;
+  background:linear-gradient(180deg,#f3e2b8 0%, var(--paper) 60%);}
+.title-band{
+  align-self:center; background:linear-gradient(90deg,var(--navy),var(--teal)); color:#fff; font-weight:900;
+  letter-spacing:.28em; padding:6px 16px 6px calc(16px + .28em); border-radius:4px; font-size:13px;
+  box-shadow:var(--shadow);
+}
+h1.logo{margin:14px 0 2px; font-size:33px; line-height:1.32; font-weight:900; color:var(--ink); text-align:center;}
+h1.logo .accent{color:var(--bad);}
+.title-sub{font-size:14.5px; font-weight:700; color:#4c5a6e; margin:6px 0 2px; line-height:1.7; text-align:center;}
+.title-faces{display:flex; gap:5px; justify-content:center; margin:14px 0 4px; flex-wrap:wrap;}
+.title-faces .ta-face{width:50px; height:50px; background:#fff; border:2px solid #cfd8e2; border-radius:50%; padding:2px;}
+.title-stats{display:flex; gap:8px; justify-content:center; margin:12px 0 2px; flex-wrap:wrap;}
+.stat-chip{
+  background:#fff; border:2px solid #cfd8e2; border-radius:14px; padding:7px 12px;
+  font-size:12.5px; font-weight:800; box-shadow:var(--shadow);
+}
+.stat-chip b{font-size:18px; color:var(--navy2);}
+.title-badge{
+  display:inline-block; background:var(--gold2); color:#4a2f00; font-weight:900;
+  font-size:13px; border-radius:999px; padding:4px 14px; margin-top:6px;
+}
+.suggest-banner{
+  display:none; margin:12px auto 0; max-width:420px; background:#fff8e1; border:2px solid var(--gold);
+  border-radius:14px; padding:10px 14px; font-size:13.5px; font-weight:700; line-height:1.6; box-shadow:var(--shadow);
+}
+.suggest-banner.show{display:block;}
+.suggest-banner button{margin-top:6px;}
+.title-btns{display:flex; flex-direction:column; gap:11px; width:100%; max-width:360px; margin:16px auto 0;}
+.title-btns .btn{position:relative;}
+.count-badge{
+  position:absolute; top:-8px; right:10px; background:var(--bad2); color:#fff; font-size:12px; font-weight:900;
+  border-radius:999px; padding:2px 9px; box-shadow:var(--shadow);
+}
+.title-foot{margin-top:auto; padding:18px 0 4px; font-size:12px; color:#8a8171; line-height:1.7; text-align:center;}
+/* ---------- ステータスカード ---------- */
+.status-card{
+  margin:12px 14px 4px; background:linear-gradient(135deg,#0b1e33,#16324f 60%,#8a6410);
+  color:#fff; border-radius:18px; padding:14px 16px; box-shadow:var(--shadow);
+}
+.status-card .sc-big{font-size:13px; font-weight:800; opacity:.92;}
+.status-card .sc-big b{font-size:29px; line-height:1; margin-left:4px;}
+.status-card .sc-row{font-size:13px; font-weight:700; margin-top:7px; display:flex; gap:14px; flex-wrap:wrap;}
+.progress-track{height:9px; background:rgba(255,255,255,.28); border-radius:99px; margin-top:8px; overflow:hidden;}
+.progress-fill{height:100%; background:linear-gradient(90deg,var(--gold2),#f97316); border-radius:99px; transition:width .5s;}
+.screen .progress-track{background:#e7ddc2;}
+.screen .progress-fill{background:linear-gradient(90deg,var(--gold),var(--teal));}
+/* ---------- マップ ---------- */
+.level-bar{display:flex; gap:6px; flex-wrap:wrap; padding:12px 14px 2px; align-items:center;}
+.level-bar .lb-label{font-size:11.5px; font-weight:800; color:#8a8171;}
+.level-chip{
+  border:2px solid #cfd8e2; background:#fff; border-radius:999px; padding:6px 13px;
+  font-size:13px; font-weight:800;
+}
+.level-chip.active{background:var(--navy); border-color:var(--navy); color:#fff;}
+.chapter-block{padding:10px 14px 2px;}
+.chapter-head{font-weight:900; font-size:16px; margin:8px 0 8px; padding-left:10px; border-left:6px solid var(--navy);}
+.stages{display:flex; flex-direction:column; gap:10px; padding-bottom:8px;}
+.stage-card{
+  display:flex; gap:12px; align-items:center; text-align:left; width:100%;
+  background:#fff; border:2px solid #cfd8e2; border-radius:16px; padding:12px 14px;
+  box-shadow:var(--shadow); border-left:8px solid var(--navy);
+}
+.stage-card .st-face{width:58px; height:58px; flex:none; background:var(--paper); border-radius:50%; padding:2px; border:2px solid #cfd8e2;}
+.stage-card .st-main{flex:1; min-width:0;}
+.stage-card .st-id{display:block; font-size:11.5px; font-weight:900; color:#8a8171; letter-spacing:.08em;}
+.stage-card .st-title{display:block; font-size:16px; font-weight:900; line-height:1.35; margin:1px 0;}
+.stage-card .st-meta{display:block; font-size:12px; color:#5a6a7d; font-weight:700; line-height:1.5;}
+.stage-card .st-prog{font-size:12px; font-weight:900; color:var(--teal); flex:none; text-align:center;}
+.due-tag{display:inline-block; background:var(--bad2); color:#fff; font-size:10.5px; font-weight:900; border-radius:999px; padding:1px 8px; margin-left:6px; vertical-align:middle;}
+/* ---------- 紹介 ---------- */
+.intro-body{padding:16px;}
+.intro-face-wrap{display:flex; gap:14px; align-items:center; background:#fff; border:2px solid #cfd8e2; border-radius:18px; padding:14px; box-shadow:var(--shadow);}
+.intro-face-wrap .ta-face{width:92px; height:92px; flex:none;}
+.intro-face-wrap .if-name{font-size:20px; font-weight:900;}
+.intro-face-wrap .if-pers{font-size:13px; line-height:1.6; color:#4c5a6e; font-weight:600; margin-top:3px;}
+.speech{
+  margin-top:14px; background:#fff8e1; border:2px solid var(--gold); border-radius:16px;
+  padding:13px 15px; font-size:15px; font-weight:700; line-height:1.75; position:relative;
+}
+.speech::before{content:"💬"; position:absolute; top:-13px; left:14px; font-size:19px;}
+.intro-list{margin-top:14px; background:#fff; border:2px solid #cfd8e2; border-radius:16px; padding:6px 14px; box-shadow:var(--shadow);}
+.intro-list .il-row{display:flex; gap:9px; padding:9px 0; border-bottom:1px dashed #e7ddc2; font-size:13.5px; font-weight:700; line-height:1.55; align-items:baseline;}
+.intro-list .il-row:last-child{border-bottom:none;}
+.il-row .il-no{flex:none; background:var(--navy); color:#fff; border-radius:50%; width:21px; height:21px; font-size:11.5px; display:inline-flex; align-items:center; justify-content:center; font-weight:900;}
+.il-row .il-mode{flex:none; font-size:11px; font-weight:900; border-radius:999px; padding:1px 8px; background:#e8f0f8; color:var(--navy2);}
+.il-row .il-mode.reply{background:#fdeeda; color:#9a5b00;}
+.toggle-row{display:flex; align-items:center; gap:10px; margin-top:14px; background:#fff; border:2px solid #cfd8e2; border-radius:14px; padding:10px 14px; font-weight:800; font-size:14px; box-shadow:var(--shadow);}
+.toggle-row .spacer{flex:1;}
+.switch{position:relative; width:52px; height:29px; flex:none;}
+.switch input{opacity:0; width:0; height:0;}
+.switch .sl{position:absolute; inset:0; background:#cfd8e2; border-radius:999px; transition:.2s; cursor:pointer;}
+.switch .sl::before{content:""; position:absolute; width:23px; height:23px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; box-shadow:0 1px 4px rgba(0,0,0,.25);}
+.switch input:checked + .sl{background:var(--teal);}
+.switch input:checked + .sl::before{transform:translateX(23px);}
+/* ---------- セッション ---------- */
+.session-head{padding:10px 14px 0;}
+.session-meta{display:flex; gap:8px; align-items:center; flex-wrap:wrap; font-size:12.5px; font-weight:800; color:#5a6a7d;}
+.combo-chip{background:linear-gradient(180deg,#f97316,#ea580c); color:#fff; border-radius:999px; padding:3px 11px; font-weight:900; display:none;}
+.combo-chip.show{display:inline-block;}
+.timer-track{height:8px; background:#e7ddc2; border-radius:99px; overflow:hidden; margin-top:8px; display:none;}
+.timer-track.show{display:block;}
+.timer-fill{height:100%; background:linear-gradient(90deg,var(--good2),var(--gold2)); width:100%;}
+.timer-fill.low{background:linear-gradient(90deg,var(--bad2),#f97316);}
+.feed{padding:12px 14px 6px; display:flex; flex-direction:column; gap:12px;}
+.q-card{background:#fff; border:2px solid #cfd8e2; border-radius:18px; padding:14px; box-shadow:var(--shadow);}
+.q-top{display:flex; gap:11px; align-items:flex-start;}
+.q-face{width:62px; height:62px; flex:none; background:var(--paper); border-radius:50%; border:2px solid #cfd8e2; padding:2px;}
+.q-role{font-size:11.5px; font-weight:900; color:#8a8171; letter-spacing:.05em;}
+.q-topic{font-size:14.5px; font-weight:900; line-height:1.45;}
+.console{
+  margin-top:12px; background:linear-gradient(135deg,#0b1e33,#16324f); border-radius:14px; padding:11px 12px; color:#fff;
+}
+.console .cs-row{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+.play-btn{
+  border:none; background:linear-gradient(180deg,var(--gold2),var(--gold)); color:#3d2700;
+  font-weight:900; font-size:15px; border-radius:999px; padding:10px 18px; box-shadow:0 3px 0 #8a6410;
+  display:inline-flex; align-items:center; gap:7px;
+}
+.play-btn:active{transform:translateY(2px); box-shadow:0 1px 0 #8a6410;}
+.stop-btn{
+  border:2px solid #fff; background:transparent; color:#fff; font-weight:900; font-size:13.5px;
+  border-radius:999px; padding:8px 14px; display:none;
+}
+.stop-btn.show{display:inline-block;}
+.speed-group{display:inline-flex; background:rgba(255,255,255,.14); border-radius:999px; padding:3px; gap:2px;}
+.speed-btn{border:none; background:transparent; color:#dbe7f3; font-weight:800; font-size:12.5px; border-radius:999px; padding:5px 10px;}
+.speed-btn.active{background:#fff; color:var(--navy);}
+.console .cs-toggles{display:flex; gap:6px; margin-top:9px; flex-wrap:wrap;}
+.tgl-chip{
+  border:1.5px solid rgba(255,255,255,.55); background:transparent; color:#dbe7f3; border-radius:999px;
+  padding:4px 11px; font-size:12px; font-weight:800;
+}
+.tgl-chip.active{background:#fff; color:var(--navy); border-color:#fff;}
+.subtitle-en{
+  margin-top:10px; background:rgba(255,255,255,.1); border-radius:10px; padding:9px 11px;
+  font-size:15.5px; line-height:1.55; font-weight:600; display:none;
+}
+.subtitle-en.show{display:block;}
+.hint-ja{margin-top:8px; font-size:13px; line-height:1.6; color:#ffe9a8; display:none; font-weight:700;}
+.hint-ja.show{display:block;}
+.choices{display:flex; flex-direction:column; gap:9px; margin-top:13px;}
+.choice-btn{
+  text-align:left; background:var(--paper2); border:2px solid #cfd8e2; border-radius:14px;
+  padding:12px 14px; font-size:15.5px; font-weight:700; line-height:1.5; transition:transform .06s;
+}
+.choice-btn:active{transform:scale(.985);}
+.choice-btn .ch-id{display:inline-block; background:var(--navy); color:#fff; font-weight:900; font-size:12px; border-radius:6px; padding:1px 8px; margin-right:8px; vertical-align:1px;}
+.choice-btn.picked-bad{border-color:var(--bad2); background:#fdecec;}
+.choice-btn.picked-good{border-color:var(--good2); background:#e8f7ee;}
+.reply-box{margin-top:13px;}
+.reply-input{
+  width:100%; border:2px solid #cfd8e2; border-radius:14px; padding:12px 13px; font-size:16px;
+  font-family:inherit; line-height:1.5; background:var(--paper2); resize:vertical; min-height:56px;
+}
+.reply-row{display:flex; gap:8px; margin-top:9px;}
+.reply-row .btn{flex:1;}
+.mic-btn{
+  flex:none !important; border:2px solid var(--navy); background:#fff; color:var(--navy);
+  border-radius:999px; padding:0 18px; font-weight:900; font-size:15px;
+}
+.mic-btn.rec{background:var(--bad2); border-color:var(--bad2); color:#fff; animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.goal-hint{font-size:12.5px; color:#5a6a7d; font-weight:700; margin-top:8px; line-height:1.6;}
+.panic-box{
+  display:none; margin-top:13px; background:#fdf0f0; border:2px solid var(--bad2); border-radius:14px; padding:12px 14px;
+}
+.panic-box.show{display:block; animation:shake .45s;}
+.panic-box .pb-scene{font-size:14px; font-weight:700; line-height:1.65;}
+.panic-box .pb-scream{margin-top:8px; font-size:15px; font-weight:900; line-height:1.65; color:var(--bad);}
+.panic-box .pb-down{display:inline-block; margin-top:8px; background:var(--bad2); color:#fff; font-size:12px; font-weight:900; border-radius:999px; padding:2px 10px;}
+@keyframes shake{0%,100%{transform:translateX(0)}15%{transform:translateX(-8px)}30%{transform:translateX(8px)}45%{transform:translateX(-6px)}60%{transform:translateX(6px)}75%{transform:translateX(-3px)}90%{transform:translateX(3px)}}
+.pass-box{display:none; margin-top:13px; background:#edf9f1; border:2px solid var(--good2); border-radius:14px; padding:12px 14px;}
+.pass-box.show{display:block;}
+.pass-box .ps-praise{font-size:15px; font-weight:900; line-height:1.65; color:#146c36;}
+.pass-box .ps-gain{display:flex; gap:8px; margin-top:9px; flex-wrap:wrap;}
+.gain-chip{background:var(--good); color:#fff; font-weight:900; font-size:13.5px; border-radius:999px; padding:4px 13px;}
+.gain-chip.rep{background:var(--navy2);}
+.note-card{margin-top:11px; background:#fff8e1; border:2px solid var(--gold); border-radius:14px; padding:12px 14px;}
+.note-card .nc-head{font-size:14.5px; font-weight:900; line-height:1.55;}
+.note-card .nc-phrase{margin-top:7px; font-size:15px; font-weight:800; color:var(--navy2); line-height:1.6; background:#fff; border-radius:10px; padding:8px 11px; border:1.5px dashed var(--gold);}
+.note-card .nc-tip{margin-top:7px; font-size:13px; line-height:1.65; font-weight:600; color:#5a4a1a;}
+.reveal-box{display:none; margin-top:13px; background:#eef4fb; border:2px solid var(--navy2); border-radius:14px; padding:12px 14px;}
+.reveal-box.show{display:block;}
+.reveal-box .rv-label{font-size:11.5px; font-weight:900; color:var(--navy2); letter-spacing:.06em;}
+.reveal-box .rv-text{font-size:16.5px; font-weight:800; line-height:1.6; margin-top:3px;}
+.session-actions{padding:4px 14px 18px; display:flex; flex-direction:column; gap:9px;}
+.linklike{background:none;border:none;color:var(--navy2);font-weight:800;font-size:13px;text-decoration:underline;padding:4px;}
+/* ---------- 結果 ---------- */
+.result-body{padding:18px 16px;}
+.result-hero{
+  background:linear-gradient(135deg,#0b1e33,#16324f 60%,#8a6410); color:#fff; border-radius:20px;
+  padding:20px 18px; text-align:center; box-shadow:var(--shadow);
+}
+.result-hero .rh-title{font-size:21px; font-weight:900; line-height:1.45;}
+.result-hero .rh-tips{font-size:15px; font-weight:800; margin-top:8px; opacity:.95;}
+.result-hero .rh-tips b{font-size:34px; color:var(--gold2);}
+.result-rows{margin-top:14px; background:#fff; border:2px solid #cfd8e2; border-radius:16px; padding:6px 14px; box-shadow:var(--shadow);}
+.result-rows .rr-row{display:flex; justify-content:space-between; gap:10px; padding:9px 0; border-bottom:1px dashed #e7ddc2; font-size:14px; font-weight:700;}
+.result-rows .rr-row:last-child{border-bottom:none;}
+.new-record{display:inline-block; background:var(--bad2); color:#fff; font-size:11.5px; font-weight:900; border-radius:999px; padding:2px 10px; margin-left:7px; vertical-align:2px;}
+/* ---------- フレーズ帳・練習リスト ---------- */
+.phrase-item{background:#fff; border:2px solid #cfd8e2; border-radius:16px; padding:12px 14px; margin:0 14px 10px; box-shadow:var(--shadow);}
+.phrase-item .ph-stage{font-size:11px; font-weight:900; color:#8a8171; letter-spacing:.06em;}
+.phrase-item .ph-reply{font-size:16px; font-weight:800; line-height:1.55; margin-top:2px;}
+.phrase-item .ph-key{margin-top:6px; font-size:13.5px; font-weight:700; color:var(--navy2); line-height:1.6; background:#f2f6fb; border-radius:9px; padding:7px 10px;}
+.phrase-item .ph-line{margin-top:6px; font-size:13px; color:#5a6a7d; line-height:1.55; font-weight:600;}
+.ph-row{display:flex; gap:7px; margin-top:9px; flex-wrap:wrap; align-items:center;}
+.mini-play{
+  border:none; background:linear-gradient(180deg,var(--navy2),var(--navy)); color:#fff; font-weight:800;
+  font-size:12.5px; border-radius:999px; padding:7px 13px;
+}
+.mini-stop{border:2px solid var(--navy); background:#fff; color:var(--navy); font-weight:800; font-size:12.5px; border-radius:999px; padding:5px 12px; display:none;}
+.mini-stop.show{display:inline-block;}
+.practice-item{
+  display:flex; gap:11px; align-items:center; width:100%; text-align:left; background:#fff; border:2px solid #cfd8e2;
+  border-radius:14px; padding:11px 13px; margin:0 0 9px; box-shadow:var(--shadow);
+}
+.practice-item .pi-main{flex:1; min-width:0;}
+.practice-item .pi-topic{font-size:14.5px; font-weight:900; line-height:1.4;}
+.practice-item .pi-line{font-size:12.5px; color:#5a6a7d; font-weight:600; line-height:1.5; margin-top:2px;}
+.score-badge{flex:none; font-size:12px; font-weight:900; border-radius:999px; padding:4px 11px; background:#e8f7ee; color:#146c36; border:1.5px solid var(--good2);}
+.score-badge.none{background:#f1eee2; color:#8a8171; border-color:#cfd8e2;}
+/* ---------- 練習（ディクテーション/シャドーイング） ---------- */
+.mode-tabs{display:flex; gap:7px; padding:12px 14px 0;}
+.mode-tab{
+  flex:1; border:2px solid #cfd8e2; background:#fff; border-radius:12px; padding:10px 6px;
+  font-size:14.5px; font-weight:900; color:#5a6a7d;
+}
+.mode-tab.active{background:var(--navy); border-color:var(--navy); color:#fff;}
+.dict-result{margin-top:12px; display:none;}
+.dict-result.show{display:block;}
+.dict-words{font-size:17px; line-height:2; font-weight:700; background:#fff; border:2px solid #cfd8e2; border-radius:14px; padding:12px 14px;}
+.w-ok{color:var(--good); border-bottom:3px solid var(--good2);}
+.w-ng{color:var(--bad2); border-bottom:3px solid var(--bad2); background:#fdecec; border-radius:4px; padding:0 2px;}
+.dict-extras{margin-top:8px; font-size:13px; font-weight:700; color:#9a5b00; line-height:1.6;}
+.dict-score{font-size:15px; font-weight:900; margin-top:9px;}
+.step-list{display:flex; flex-direction:column; gap:10px; margin-top:13px;}
+.step-card{background:#fff; border:2px solid #cfd8e2; border-radius:14px; padding:12px 14px; box-shadow:var(--shadow);}
+.step-card.done{border-color:var(--good2); background:#f4fbf6;}
+.step-card .sc-head{display:flex; gap:9px; align-items:center; font-weight:900; font-size:14.5px;}
+.step-card .sc-no{flex:none; background:var(--navy); color:#fff; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:13px;}
+.step-card.done .sc-no{background:var(--good);}
+.step-card .sc-body{margin-top:9px; font-size:13.5px; line-height:1.65; font-weight:600; color:#4c5a6e;}
+.step-card .sc-actions{display:flex; gap:8px; margin-top:9px; flex-wrap:wrap;}
+.script-box{display:none; margin-top:9px; background:#f2f6fb; border-radius:10px; padding:9px 11px; font-size:15px; font-weight:700; line-height:1.6;}
+.script-box.show{display:block;}
+.empty-note{margin:16px 14px; background:#fff; border:2px dashed #cfd8e2; border-radius:16px; padding:18px 16px; text-align:center; font-size:14px; font-weight:700; color:#5a6a7d; line-height:1.8;}
+.howto-body{padding:16px; font-size:14.5px; line-height:1.85; font-weight:600;}
+.howto-body h3{font-size:16px; margin:18px 0 6px; color:var(--navy);}
+.howto-body h3:first-child{margin-top:0;}
+/* ---------- FX ---------- */
+#confetti-canvas{position:fixed; inset:0; pointer-events:none; z-index:60; display:none;}
+#fx-tip{
+  position:fixed; left:50%; top:34%; transform:translate(-50%,-50%) scale(.6); z-index:61;
+  background:linear-gradient(180deg,var(--gold2),var(--gold)); color:#4a2f00; font-weight:900; font-size:30px;
+  border-radius:18px; padding:14px 30px; box-shadow:0 10px 30px rgba(0,0,0,.35); display:none; text-align:center;
+}
+#fx-tip.show{display:block; animation:tippop .9s ease-out;}
+@keyframes tippop{0%{transform:translate(-50%,-50%) scale(.5); opacity:0}18%{transform:translate(-50%,-50%) scale(1.12); opacity:1}32%{transform:translate(-50%,-50%) scale(1)}75%{opacity:1}100%{transform:translate(-50%,-64%) scale(1); opacity:0}}
+.shake-screen{animation:shake .45s;}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- タイトル -->
+  <section class="screen" id="screen-title">
+    <div class="title-band">LISTENING &amp; SPEAKING RUSH</div>
+    <h1 class="logo">超せっかち<br><span class="accent">海外バイト先店長</span></h1>
+    <p class="title-sub">せっかち店長とお客さんの「早口英語」を聞き取り、3秒で切り返せ！<br>チップと評判を稼いで、伝説の店員を目指す実戦リスニング。</p>
+    <div class="title-faces" id="title-faces"></div>
+    <div class="title-stats" id="title-stats"></div>
+    <div style="text-align:center;"><span class="title-badge" id="title-rank"></span></div>
+    <div class="suggest-banner" id="suggest-banner"></div>
+    <div class="title-btns">
+      <button class="btn gold big" id="btn-to-map">🏃 シフトに出る</button>
+      <button class="btn big" id="btn-to-endless">🎲 ランダム連続シフト</button>
+      <button class="btn big" id="btn-to-srs">📅 今日の復習<span class="count-badge" id="badge-srs" style="display:none;"></span></button>
+      <button class="btn big" id="btn-to-review">🔥 苦手克服シフト<span class="count-badge" id="badge-review" style="display:none;"></span></button>
+      <button class="btn sub big" id="btn-to-practice">🎧 練習（ディクテーション／シャドーイング）</button>
+      <button class="btn sub big" id="btn-to-phrase">📖 フレーズ帳</button>
+      <button class="btn sub" id="btn-to-howto">遊び方・使い方</button>
+    </div>
+    <div class="title-foot">壁打ちシリーズ第5弾 ／ ver 1.0.0<br>進捗はこの端末のブラウザに保存されます</div>
+  </section>
+
+  <!-- マップ -->
+  <section class="screen" id="screen-map">
+    <div class="topbar">
+      <button class="back-btn" id="btn-map-back">← 戻る</button>
+      <div class="tb-title">シフト表（全4章・8シフト・24問）</div>
+      <button class="sound-toggle" data-sound-toggle>音：オン</button>
+    </div>
+    <div class="scroll-body">
+      <div class="status-card" id="map-status"></div>
+      <div class="level-bar" id="level-bar">
+        <span class="lb-label">レベル：</span>
+        <button class="level-chip" data-level="all">すべて</button>
+        <button class="level-chip" data-level="junior">高校受験</button>
+        <button class="level-chip" data-level="univ">大学受験</button>
+        <button class="level-chip" data-level="business">社会人実務</button>
+      </div>
+      <div id="map-list"></div>
+    </div>
+  </section>
+
+  <!-- シフト紹介 -->
+  <section class="screen" id="screen-intro">
+    <div class="topbar">
+      <button class="back-btn" id="btn-intro-back">← 戻る</button>
+      <div class="tb-title" id="intro-title">シフト紹介</div>
+      <button class="sound-toggle" data-sound-toggle>音：オン</button>
+    </div>
+    <div class="scroll-body"><div class="intro-body" id="intro-body"></div></div>
+  </section>
+
+  <!-- セッション -->
+  <section class="screen" id="screen-session">
+    <div class="topbar">
+      <button class="back-btn" id="btn-session-quit">✕ やめる</button>
+      <div class="tb-title" id="session-title">シフト中</div>
+      <button class="sound-toggle" data-sound-toggle>音：オン</button>
+    </div>
+    <div class="scroll-body">
+      <div class="session-head">
+        <div class="session-meta" id="session-meta"></div>
+        <div class="timer-track" id="timer-track"><div class="timer-fill" id="timer-fill"></div></div>
+      </div>
+      <div class="feed" id="feed"></div>
+      <div class="session-actions" id="session-actions"></div>
+    </div>
+  </section>
+
+  <!-- 結果 -->
+  <section class="screen" id="screen-result">
+    <div class="topbar">
+      <button class="back-btn" id="btn-result-title">← タイトル</button>
+      <div class="tb-title">シフト結果</div>
+      <button class="sound-toggle" data-sound-toggle>音：オン</button>
+    </div>
+    <div class="scroll-body"><div class="result-body" id="result-body"></div></div>
+  </section>
+
+  <!-- フレーズ帳 -->
+  <section class="screen" id="screen-phrase">
+    <div class="topbar">
+      <button class="back-btn" id="btn-phrase-back">← 戻る</button>
+      <div class="tb-title">フレーズ帳（音声復習）</div>
+      <button class="sound-toggle" data-sound-toggle>音：オン</button>
+    </div>
+    <div class="scroll-body">
+      <div class="console" style="margin:12px 14px 4px;">
+        <div class="cs-row">
+          <span style="font-weight:900; font-size:13.5px;">再生速度</span>
+          <span class="speed-group" id="phrase-speed"></span>
+          <button class="stop-btn" id="phrase-stop">■ 停止</button>
+        </div>
+      </div>
+      <div id="phrase-list" style="margin-top:10px;"></div>
+    </div>
+  </section>
+
+  <!-- 練習リスト -->
+  <section class="screen" id="screen-practice-list">
+    <div class="topbar">
+      <button class="back-btn" id="btn-plist-back">← 戻る</button>
+      <div class="tb-title">練習：問題を選ぶ</div>
+      <button class="sound-toggle" data-sound-toggle>音：オン</button>
+    </div>
+    <div class="scroll-body"><div id="plist-body" style="padding:12px 14px 4px;"></div></div>
+  </section>
+
+  <!-- 練習 -->
+  <section class="screen" id="screen-practice">
+    <div class="topbar">
+      <button class="back-btn" id="btn-practice-back">← 一覧</button>
+      <div class="tb-title" id="practice-title">練習</div>
+      <button class="sound-toggle" data-sound-toggle>音：オン</button>
+    </div>
+    <div class="scroll-body">
+      <div class="mode-tabs">
+        <button class="mode-tab" id="tab-dict">✍️ ディクテーション</button>
+        <button class="mode-tab" id="tab-shadow">🗣️ シャドーイング</button>
+      </div>
+      <div style="padding:0 14px 6px;"><div class="feed" style="padding:12px 0 0;" id="practice-body"></div></div>
+    </div>
+  </section>
+
+  <!-- 遊び方 -->
+  <section class="screen" id="screen-howto">
+    <div class="topbar">
+      <button class="back-btn" id="btn-howto-back">← 戻る</button>
+      <div class="tb-title">遊び方・使い方</div>
+      <button class="sound-toggle" data-sound-toggle>音：オン</button>
+    </div>
+    <div class="scroll-body"><div class="howto-body">
+      <h3>🏃 シフト（通常モード）</h3>
+      <p>店長やお客さんの英語音声が流れます。まず「聞く」ことが勝負。英文字幕と日本語ヒントはコンソールのボタンでいつでも開けます（最初は閉じておくのがおすすめ）。選択肢をタップするか、自由入力モードでは英語で切り返してください。正解するとチップと評判が入り、実践フレーズの解説カードが出ます。間違えると店内パニック＆店長の絶叫ツッコミ。2回つまずくと「答えを見る」が出ます（その問題はチップなしで、苦手リストに入ります）。</p>
+      <h3>🎧 リスニングコンソール</h3>
+      <p>速度は 0.95（ゆっくり）／1.1／1.25（早口）／1.4（超早口）の4段階。読み上げ中は必ず「■ 停止」ボタンが出ます。好調が続くと、タイトル画面で「次は1.4倍速に挑戦？」と提案が出ることがあります（強制はしません）。</p>
+      <h3>🎲 ランダム連続シフト</h3>
+      <p>全24問からランダムに次々と出題。連続正解コンボとチップ合計のハイスコアを狙うモードです。「10秒制限タイムアタック」をONにすると、1問10秒のカウントダウンが付きます。</p>
+      <h3>📅 今日の復習（間隔反復）</h3>
+      <p>解いた問題は、翌日→3日後→7日後→14日後の間隔で「今日の復習」に自動で届きます。思い出すタイミングで解き直すと、聞き取りが定着します。</p>
+      <h3>🔥 苦手克服シフト</h3>
+      <p>間違えた問題・答えを見た問題が自動で集まります。ここで正解するとリストから卒業します。</p>
+      <h3>✍️ ディクテーション</h3>
+      <p>セリフを聞いて、そのままタイプ入力。答え合わせで単語ごとに色分け表示されます。リスニング訓練の本命です。</p>
+      <h3>🗣️ シャドーイング</h3>
+      <p>セリフを聞く→少し遅れて声に出してついて唱える→スクリプトで確認、の3ステップ。対応環境では音声認識で自分の発話を文字起こしして照合もできます（認識できなくても練習は進められます）。</p>
+      <h3>📖 フレーズ帳</h3>
+      <p>クリアした問題の「模範の切り返し」と「キーフレーズ」が自動で集まります。音声ボタンでいつでもリピート練習できます。</p>
+      <h3>音声について</h3>
+      <p>読み上げは端末の音声合成（英語音声）を使います。声質は端末によって異なります。音声入力は対応ブラウザでのみ使えます（使えなくてもテキスト入力で最後まで遊べます）。</p>
+    </div></div>
+  </section>
+</div>
+<canvas id="confetti-canvas"></canvas>
+<div id="fx-tip"></div>
+<script>
+"use strict";
+const CHAPTERS = [{"schema_version":"1.0.0","chapter_id":1,"chapter_title":"高校受験・日常会話＆買い物・道案内シフト","stages":[{"schema_version":"1.0.0","chapter_id":1,"chapter_title":"高校受験・日常会話＆買い物・道案内シフト","stage_id":"S-1","stage_title":"ニューヨーク激混みカフェ：注文＆丁寧な依頼","target_level":"高校受験・日常基礎","workplace":"Brooklyn Rush Cafe","manager":{"name":"マイク店長","personality":"1秒でも手が止まると『Hey! Move!』と叫ぶが、仕事をこなすとすぐチップをくれる熱血店長","shift_start_line":"おい新人！朝の大行列だぞ！客と俺の早口英語を聞き取って3秒で返せ！モタモタしてたらコーヒー冷めるぞ！"},"shifts":[{"shift_id":"S1_Q01","topic_tag":"注文の受け方・サイズと温度（for here or to go）","weakness_category":"rush_here_togo","input_mode":"rush_choice","audio_line_en":"Hey! Ask that guy if he wants his coffee for here or to go, and hurry up!","audio_line_ja":"おい！あの客に「店内（for here）か持ち帰り（to go）か」聞いてこい、急げ！","speaker_role":"マイク店長","choices":[{"id":"A","label":"Is that for here or to go?"},{"id":"B","label":"Do you go here or stay?"},{"id":"C","label":"Are you going to coffee?"}],"correct_answer":{"canonical_reply":"Is that for here or to go?","acceptable_keywords":["for here or to go"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S1_01A","trigger":["B","C"],"panic_scene":"お客さんが「えっ、私がコーヒーになるの！？」と驚いて後ろの行列がストップ！","manager_scream":"おい！！客に『あなたはコーヒーになるつもりですか』って聞いてどうすんだよ！店内で食べるかは `for here`、持ち帰りは `to go` だ！"}],"tip_reaction":{"manager_praise":"ナイススピード！`For here or to go?` 一発で通じたな！ほらチップ $5 だ！","tip_dollars":5,"reputation_up":10},"practical_note":{"headline":"カフェ・ファストフード世界共通フレーズ：「For here or to go?」","key_phrase":"Would you like that for here or to go?（店内でお召し上がりですか、お持ち帰りですか？）","listening_tip":"アメリカでは「for here or to go」、イギリスでは「eat in or takeaway」が定番！"}},{"shift_id":"S1_Q02","topic_tag":"否定疑問文への答え方（Don't you...?）","weakness_category":"rush_neg_question","input_mode":"rush_choice","audio_line_en":"Wait, don't you have any decaf coffee left?","audio_line_ja":"ちょっと待って、カフェインレス（デカフェ）のコーヒーはもう残っていないの？","speaker_role":"常連のお客さん","choices":[{"id":"A","label":"No, we don't. Sorry, we're out of decaf."},{"id":"B","label":"Yes, we don't have any."},{"id":"C","label":"No, we have plenty of it!"}],"correct_answer":{"canonical_reply":"No, we don't. Sorry, we're out of decaf.","acceptable_keywords":["No, we don't"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S1_02A","trigger":["B","C"],"panic_scene":"お客さんが「えっ、あるの？ないの？どっち！？」と混乱してレジ前でフリーズ！","manager_scream":"おい新人！『はい、ありません』って日本語のノリで `Yes, we don't` なんて言うな！英語は答えが否定なら質問が何であれ `No` だ！"}],"tip_reaction":{"manager_praise":"完璧！否定疑問文にしっかり `No, we don't.` で返せたな！客も納得してるぜ！","tip_dollars":8,"reputation_up":12},"practical_note":{"headline":"否定疑問文の鉄則：質問の形に関係なく、答えの中身が「ある→Yes」「ない→No」","key_phrase":"Don't you have...? → あるなら Yes, I do. / ないなら No, I don't.","listening_tip":"高校入試・共通テストリスニングで最も引っかかりやすい「Yes/No 逆転トラップ」！"}},{"shift_id":"S1_Q03","topic_tag":"「Would you mind -ing?」への返事","weakness_category":"rush_mind_ing","input_mode":"rush_choice","audio_line_en":"Would you mind wiping that table right now?","audio_line_ja":"今すぐあのテーブルを拭いていただけますか？（拭くのを気にしますか＝嫌ですか？）","speaker_role":"マイク店長","choices":[{"id":"A","label":"Not at all! I'll do it right away."},{"id":"B","label":"Yes, of course! I'll do it!"},{"id":"C","label":"Yes, I mind very much!"}],"correct_answer":{"canonical_reply":"Not at all! I'll do it right away.","acceptable_keywords":["Not at all"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S1_03A","trigger":["B","C"],"panic_scene":"店長が「『はい、嫌です！』って反抗期かお前！！」と雑巾を落としてズッコケる！","manager_scream":"待て！`Would you mind` は『嫌ですか？』って聞いてるんだ！快く引き受けるなら `No / Not at all（全然嫌じゃないです＝もちろんです！）` だ！"}],"tip_reaction":{"manager_praise":"おっ、`Not at all!` と即答できるとは優秀だな！テーブルピッカピカだぜ！","tip_dollars":8,"reputation_up":12},"practical_note":{"headline":"Would you mind -ing?（〜していただけませんか）→ 快諾は「Not at all / No problem」","key_phrase":"mind ＝「気にする・嫌がる」。だから Yes と言うと「はい、嫌です」になってしまう。","listening_tip":"「Do you mind if I sit here?（座ってもいいですか）」の承諾も「Not at all / Go ahead」！"}}]},{"schema_version":"1.0.0","chapter_id":1,"chapter_title":"高校受験・日常会話＆買い物・道案内シフト","stage_id":"S-2","stage_title":"駅前インフォメーション：道案内＆時刻・価格の聞き取り","target_level":"高校受験・日常基礎","workplace":"Central Station Info","manager":{"name":"サラ先輩","personality":"優しそうに見えて、道案内や数字の聞き間違いには超厳しい駅インフォメーション主任","shift_start_line":"外国人観光客がどんどん来るわよ！道案内と『15と50』『何番線』を聞き間違えたら大遅刻させちゃうから集中して！"},"shifts":[{"shift_id":"S2_Q01","topic_tag":"道案内（go straight / turn left / block）","weakness_category":"rush_directions","input_mode":"rush_reply","audio_line_en":"Excuse me! How can I get to the museum? Tell me quickly, my train leaves soon!","audio_line_ja":"すみません！博物館へはどう行けばいいですか？早く教えてください！","speaker_role":"急いでいる観光客","choices":[],"correct_answer":{"canonical_reply":"Go straight down this street and turn left at the second corner.","acceptable_keywords":["straight","turn","left","right","corner","block"]},"panic_comedies":[{"trap_id":"T_S2_01A","trigger":["hello","wait","train"],"misuse_meaning":"","panic_scene":"観光客が迷子になって駅の反対側へ全力疾走していってしまった！","manager_scream":"ちょっと！『まっすぐ行って(go straight)』『左に曲がる(turn left)』を言わなきゃ伝わらないわよ！"}],"tip_reaction":{"manager_praise":"完璧な道案内ね！`Go straight` と `turn` を使えれば世界中のどこでも案内できるわ！","tip_dollars":10,"reputation_up":15},"practical_note":{"headline":"道案内の3種の神器：「Go straight」「Turn left/right」「It's on your left/right」","key_phrase":"Go straight for two blocks, and turn right at the traffic light.（2ブロックまっすぐ進み、信号を右折）","listening_tip":"共通テスト・高校入試リスニングでは「道案内マップ問題」が必ず出るので左右の聞き取りに注意！"}},{"shift_id":"S2_Q02","topic_tag":"時刻表現（a quarter to five = 4:45）","weakness_category":"rush_time_quarter","input_mode":"rush_choice","audio_line_en":"The express train departs at a quarter to five from Platform 3!","audio_line_ja":"特急列車は4時45分に3番ホームから出発するわよ！","speaker_role":"サラ先輩","choices":[{"id":"A","label":"4時45分（4:45）ですね！お客さんに伝えます！"},{"id":"B","label":"5時15分（5:15）ですね！ゆっくりで大丈夫ですね！"},{"id":"C","label":"5時45分（5:45）ですね！"}],"correct_answer":{"canonical_reply":"4時45分（4:45）ですね！お客さんに伝えます！","acceptable_keywords":["4:45","4時45分"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S2_02A","trigger":["B","C"],"panic_scene":"お客さんがのんびりコーヒーを飲んでいる間に特急列車が発車してしまった！","manager_scream":"ああっ乗り遅れたじゃない！`a quarter（15分）to five（5時まであと15分）`＝『4時45分』よ！5時15分は `a quarter past five`！"}],"tip_reaction":{"manager_praise":"ナイス聞き取り！`to（〜まであと）` と `past（〜過ぎ）` を瞬時に計算できたわね！","tip_dollars":8,"reputation_up":12},"practical_note":{"headline":"時刻の英語：a quarter to 5 ＝「5時15分前（4:45）」 / a quarter past 5 ＝「5時15分」","key_phrase":"half past 5 ＝ 5時30分。15分＝a quarter。","listening_tip":"リスニングで「4:45」とストレートに言わず「a quarter to five」と言い換えるのが定番！"}},{"shift_id":"S2_Q03","topic_tag":"価格計算（20% off / each / per person）","weakness_category":"rush_price_calc","input_mode":"rush_choice","audio_line_en":"Tickets are 20 dollars each, but if you buy two, you get 25 percent off the total!","audio_line_ja":"チケットは1枚20ドルですが、2枚買うと合計から25％オフになります！","speaker_role":"サラ先輩","choices":[{"id":"A","label":"2枚で合計 30ドル です！"},{"id":"B","label":"2枚で合計 15ドル です！"},{"id":"C","label":"2枚で合計 35ドル です！"}],"correct_answer":{"canonical_reply":"2枚で合計 30ドル です！","acceptable_keywords":["30"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S2_03A","trigger":["B","C"],"panic_scene":"レジの金額が合わず大赤字！サラ先輩が電卓を持って頭を抱える！","manager_scream":"ちょっと計算！1枚20ドルが2枚で40ドル！その25%オフ（10ドル引き）なんだから30ドルに決まってるでしょ！"}],"tip_reaction":{"manager_praise":"暗算完璧！`each（1つあたり）` と `off（割引）` を聞き逃さなかったわね！","tip_dollars":10,"reputation_up":15},"practical_note":{"headline":"リスニングの暗算トラップ：「each（1つあたり）」と「％ off（割引）」","key_phrase":"25% off ＝ 元の値段の75%（3/4）。buy one, get one free ＝ 1個買うと1個タダ（実質半額）。","listening_tip":"聞こえた数字をそのまま選ばず、必ず「何人分か・何割引か」をメモして計算する！"}}]}]},{"schema_version":"1.0.0","chapter_id":2,"chapter_title":"大学受験・共通テストリスニング完全攻略シフト","stages":[{"schema_version":"1.0.0","chapter_id":2,"chapter_title":"大学受験・共通テストリスニング完全攻略シフト","stage_id":"S-3","stage_title":"海外イベント運営バイト：予定変更＆言い換え聞き取り","target_level":"大学受験・共通テスト（文理共通）","workplace":"Global Event Desk","manager":{"name":"ボブ監督","personality":"直前でスケジュールをコロコロ変える共通テスト第3問〜第4問のようなせっかちプロデューサー","shift_start_line":"おい！イベント直前だが予定が変わりまくってるぞ！『最初はAと言ったけど結局B』みたいな会話のひっくり返しに騙されるなよ！"},"shifts":[{"shift_id":"S3_Q01","topic_tag":"会話の訂正マーカー（Actually / It turns out）","weakness_category":"rush_correction","input_mode":"rush_choice","audio_line_en":"We planned to hold the concert in the park at 3, but because of the rain forecast, we moved it to the hall at 4. Actually, wait—the hall is booked, so let's do the gym at 4.","audio_line_ja":"3時に公園でコンサートの予定だったが雨予報で4時にホールへ移動、いや待て、ホールは予約済みだから4時に体育館にしよう！","speaker_role":"ボブ監督","choices":[{"id":"A","label":"午後4時に「体育館（gym）」ですね！案内ボード書き換えます！"},{"id":"B","label":"午後4時に「ホール（hall）」ですね！お客さんを誘導します！"},{"id":"C","label":"午後3時に「公園（park）」ですね！"}],"correct_answer":{"canonical_reply":"午後4時に「体育館（gym）」ですね！案内ボード書き換えます！","acceptable_keywords":["gym","体育館","4時"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S3_01A","trigger":["B","C"],"panic_scene":"お客さん200人が土砂降りの公園や鍵の閉まったホールの前に大集合して大ブーイング！","manager_scream":"おい！！最初の情報だけで判断するな！`Actually, wait...` の後ろの最終結論『gym at 4』を聞け！"}],"tip_reaction":{"manager_praise":"お見事！何度も予定が二転三転したのに最後の `gym` をしっかり拾ったな！","tip_dollars":12,"reputation_up":15},"practical_note":{"headline":"共通テストリスニングの極意：「最初の情報はダミー、Actually / Wait / However の後ろが正解」","key_phrase":"Actually（実は）/ It turned out that（〜だと判明した）/ Instead（代わりに）。","listening_tip":"選択肢に最初に聞こえた単語（parkやhall）が必ず並んでいるので、最後の修正まで気を抜かない！"}},{"shift_id":"S3_Q02","topic_tag":"パラフレーズ（別の言葉への言い換え聞き取り）","weakness_category":"rush_paraphrase","input_mode":"rush_choice","audio_line_en":"All participants must hand in their badges before leaving, or they won't get their deposit back.","audio_line_ja":"参加者は退場前にバッジを提出（hand in）しないと、預かり金が返金されません。","speaker_role":"ボブ監督","choices":[{"id":"A","label":"返金を受けるには「バッジを返却（return）する」必要がありますね！"},{"id":"B","label":"帰るときに「バッジにサイン（sign）する」必要がありますね！"},{"id":"C","label":"お土産として「バッジを持ち帰る（keep）」必要がありますね！"}],"correct_answer":{"canonical_reply":"返金を受けるには「バッジを返却（return）する」必要がありますね！","acceptable_keywords":["return","返却"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S3_02A","trigger":["B","C"],"panic_scene":"全員がバッジを持って帰ってしまい、返金カウンターが大混乱の行列に！","manager_scream":"おい！`hand in（提出・返却する）` をそのまま `return` に言い換えただけだぞ！同じ単語が出てこなくても意味で繋げ！"}],"tip_reaction":{"manager_praise":"完璧だ！`hand in` を `return` に変換できるとは共通テスト上級者だな！","tip_dollars":12,"reputation_up":15},"practical_note":{"headline":"共通テスト最大の攻略法：「音声の表現＝選択肢の別表現（パラフレーズ）」","key_phrase":"hand in → return / put off → postpone / affordable → cheap / be located → be situated。","listening_tip":"音声と同じ単語がそのまま書かれている選択肢は、文脈がズレたひっかけであることが多い！"}},{"shift_id":"S3_Q03","topic_tag":"比較・条件の読み取り（図表・グラフ連携）","weakness_category":"rush_condition_match","input_mode":"rush_choice","audio_line_en":"We need a venue that holds at least 100 people, costs under 500 dollars, and isn't too far from the station—under a 10-minute walk is ideal.","audio_line_ja":"最低100人収容できて、500ドル未満、駅から徒歩10分以内の会場が必要だ！","speaker_role":"ボブ監督","choices":[{"id":"A","label":"【A館】定員120人 / 450ドル / 駅徒歩8分 に手配します！"},{"id":"B","label":"【B館】定員80人 / 300ドル / 駅徒歩5分 に手配します！"},{"id":"C","label":"【C館】定員150人 / 520ドル / 駅徒歩7分 に手配します！"}],"correct_answer":{"canonical_reply":"【A館】定員120人 / 450ドル / 駅徒歩8分 に手配します！","acceptable_keywords":["A館"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S3_03A","trigger":["B","C"],"panic_scene":"40人が会場に入れず立ち見になるか、予算オーバーでボブ監督の財布が空っぽに！","manager_scream":"条件3つ全部チェックしろ！`at least 100（100人以上）` で `under 500（500ドル未満）` で `under 10-minute walk（徒歩10分以内）` はA館だけだろ！"}],"tip_reaction":{"manager_praise":"完璧な条件スクリーニングだ！A館でイベント大成功間違いなしだな！","tip_dollars":15,"reputation_up":15},"practical_note":{"headline":"条件絞り込みリスニング：「at least（以上）」「under / less than（未満）」「up to（最大〜まで）」","key_phrase":"音声を聞く前に表の項目（定員・価格・距離）を見て「どこが差別化ポイントか」を予習しておく。","listening_tip":"1つ条件がアウトになったら即その選択肢に×をつけて次の候補へ移る！"}}]},{"schema_version":"1.0.0","chapter_id":2,"chapter_title":"大学受験・共通テストリスニング完全攻略シフト","stage_id":"S-4","stage_title":"大学ラボ＆模擬講義バイト：アカデミック質疑応答","target_level":"大学受験・難関大/アカデミック","workplace":"University Lecture Hall","manager":{"name":"エミリ博士","personality":"理系・文系の講義サポートを任せてくる早口教授。論理の飛躍やデータ読み違いに容赦ない","shift_start_line":"大学の特別講義のアシスタントよ！理系・文系の講義内容と、議論の要点を正確に聞き取って切り返してちょうだい！"},"shifts":[{"shift_id":"S4_Q01","topic_tag":"講義の譲歩と結論（While 〜, recent studies show...）","weakness_category":"rush_academic_while","input_mode":"rush_choice","audio_line_en":"While many people assume that multitasking boosts productivity, recent neurological studies reveal that switching tasks actually wastes up to 40 percent of our focus time.","audio_line_ja":"多くの人はマルチタスクが生産性を上げると考えているが、最近の神経科学研究は、タスク切り替えが実は集中時間の最大40%を浪費することを明らかにしている。","speaker_role":"エミリ博士","choices":[{"id":"A","label":"マルチタスクは実は集中力を大きく損なう（非効率である）という結論ですね！"},{"id":"B","label":"マルチタスクをすれば生産性が40%アップするという結論ですね！"}],"correct_answer":{"canonical_reply":"マルチタスクは実は集中力を大きく損なう（非効率である）という結論ですね！","acceptable_keywords":["損なう","非効率"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S4_01A","trigger":["B"],"panic_scene":"教授が「あなたは40%を『増える』と『浪費する』で聞き間違えたのね！講義スライドが台無しよ！」とレーザーポインターを落とす！","manager_scream":"`While many people assume 〜` は『一般的にはそう思われがちだが』っていう否定のフリよ！`actually wastes`（実際には浪費する）を聞きなさい！"}],"tip_reaction":{"manager_praise":"素晴らしい聞き取りね！`While 〜` の対比構造と `waste` の意味を一瞬で掴んだわ！","tip_dollars":15,"reputation_up":18},"practical_note":{"headline":"アカデミック講義の定番：「While / Although（通念）→ Recent studies show / Actually（新事実）」","key_phrase":"It used to be thought that...（かつては〜と思われていたが）も「昔の間違い」を示すマーカー。","listening_tip":"「40 percent」の数字だけでなく、その直前の動詞（boosts なのか wastes なのか）を聞く！"}},{"shift_id":"S4_Q02","topic_tag":"ディスカッションでの丁寧な反論・別視点提示","weakness_category":"rush_polite_disagree","input_mode":"rush_reply","audio_line_en":"Student: Online classes should replace all face-to-face classes! Now give a polite counterargument focusing on lab experiments!","audio_line_ja":"学生「オンライン授業がすべての対面授業に取って代わるべきだ！」——実験（lab experiments）の視点から丁寧に反論して！","speaker_role":"エミリ博士","choices":[],"correct_answer":{"canonical_reply":"I see your point, but we still need face-to-face classes for hands-on lab experiments.","acceptable_keywords":["see your point","however","but","lab","experiment","hands-on","need"]},"panic_comedies":[{"trap_id":"T_S4_02A","trigger":["no","stupid","wrong"],"misuse_meaning":"","panic_scene":"教室の空気が凍りつき、学生がショックで帰ってしまった！","manager_scream":"いきなり `You're wrong!` なんて喧嘩腰になっちゃダメ！`I see your point, but...（おっしゃる通りですが〜）` で受けてから `lab experiments` を挙げなさい！"}],"tip_reaction":{"manager_praise":"完璧なアカデミック・クッション言葉ね！相手の意見を受け止めつつ実験の重要性を伝えられたわ！","tip_dollars":18,"reputation_up":20},"practical_note":{"headline":"議論・面接の最強クッション表現：「I see your point, but... / That makes sense, however...」","key_phrase":"大学入試の面接やディスカッション型問題・英作文で相手を尊重しつつ反対意見を述べる黄金フレーズ。","listening_tip":"共通テスト第5〜6問の議論問題でも、誰が賛成で誰が条件付き反対かを見分ける目印になる！"}},{"shift_id":"S4_Q03","topic_tag":"因果関係とグラフの傾向（相関 vs 因果）","weakness_category":"rush_correlation","input_mode":"rush_choice","audio_line_en":"Although ice cream sales and drowning accidents both rise in summer, eating ice cream doesn't cause drowning; hot weather is the hidden factor behind both.","audio_line_ja":"夏にアイスの売上と水難事故が両方増えるが、アイスが原因ではなく「暑い天気」が両方の背後に隠れた要因だ。","speaker_role":"エミリ博士","choices":[{"id":"A","label":"「気温の上昇（暑い天気）」という共通要因による見かけの相関ですね！"},{"id":"B","label":"「アイスクリームを食べること」が水難事故の直接の原因ですね！"}],"correct_answer":{"canonical_reply":"「気温の上昇（暑い天気）」という共通要因による見かけの相関ですね！","acceptable_keywords":["気温","共通","相関"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S4_03A","trigger":["B"],"panic_scene":"キャンパスのアイス販売が全面禁止になり、学生たちが暴動を起こす！","manager_scream":"ちょっと！`doesn't cause（原因ではない）` を聞き逃したの！？理系・文系問わず『相関と因果の混同』は研究の基本よ！"}],"tip_reaction":{"manager_praise":"完璧！`hidden factor（隠れた要因）` をしっかり聞き取れたわね！共通テストのワークシート問題もこれで満点よ！","tip_dollars":15,"reputation_up":18},"practical_note":{"headline":"研究講義リスニング：「correlation（相関）」vs「causation（因果）」","key_phrase":"lead to / result in / cause（原因となる）に否定語がついているかどうかを聞き逃さない。","listening_tip":"共通テスト第6問B（4人の会話＋グラフ）の必須ロジック！"}}]}]},{"schema_version":"1.0.0","chapter_id":3,"chapter_title":"海外旅行・日常生活サバイバル（ホテル・レストラン・病院）","stages":[{"schema_version":"1.0.0","chapter_id":3,"chapter_title":"海外旅行・日常生活サバイバル（ホテル・レストラン・病院）","stage_id":"S-5","stage_title":"五つ星ホテルフロント：チェックイン＆クレーム神対応","target_level":"社会人・海外実務","workplace":"Grand Horizon Hotel","manager":{"name":"支配人・ヴィクトリア","personality":"ミスには厳しいが、丁寧でスマートな英語対応をすると大絶賛してくれる敏腕ホテル支配人","shift_start_line":"ここは高級ホテルのフロントよ！海外生活で絶対に困らない『お会計・部屋トラブル・丁寧な依頼』を完璧にさばきなさい！"},"shifts":[{"shift_id":"S5_Q01","topic_tag":"ホテルでの部屋トラブル対応（部屋を変えてほしい）","weakness_category":"rush_hotel_change","input_mode":"rush_choice","audio_line_en":"Excuse me, the air conditioner in my room is broken and it's freezing! Could you switch my room?","audio_line_ja":"すみません、部屋のエアコンが壊れて凍えそうです！部屋を変えてもらえますか？","speaker_role":"怒っている宿泊客","choices":[{"id":"A","label":"I'm so sorry about that. Let me check if another room is available right away."},{"id":"B","label":"That's too bad. Please wear a coat and sleep."},{"id":"C","label":"You broke it, so you have to pay!"}],"correct_answer":{"canonical_reply":"I'm so sorry about that. Let me check if another room is available right away.","acceptable_keywords":["sorry","available","another room"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S5_01A","trigger":["B","C"],"panic_scene":"宿泊客が「最低のホテルだ！SNSに悪評を書き込むぞ！」と大激怒して支配人が土下座！","manager_scream":"何やってんの！！客に『コート着て寝ろ』って言うな！まずは謝罪して `Let me check if another room is available（別の部屋が空いてるか確認します）` よ！"}],"tip_reaction":{"manager_praise":"完璧なホスピタリティだわ！`available（空いている・利用可能）` はホテルでも仕事でも毎日使う最強ワードよ！","tip_dollars":15,"reputation_up":20},"practical_note":{"headline":"海外ホテル・日常の魔法の言葉：「available（空いている・都合がつく）」","key_phrase":"I'm sorry about that. Let me check right away.（申し訳ございません、すぐ確認いたします）","listening_tip":"自分が宿泊客として言いたいときは「Could I have another room? / Could you fix it?」が使える！"}},{"shift_id":"S5_Q02","topic_tag":"レストランのお会計（別々払い・持ち帰り）","weakness_category":"rush_restaurant_bill","input_mode":"rush_choice","audio_line_en":"Excuse us! Can we get separate checks, and also a box for the leftovers?","audio_line_ja":"すみません！お会計を別々（割り勘）にして、あと食べ残し用の持ち帰り箱をもらえますか？","speaker_role":"グループのお客さん","choices":[{"id":"A","label":"Certainly! I'll split the bill and bring you a to-go box."},{"id":"B","label":"No, you must check your pockets and throw the food away."}],"correct_answer":{"canonical_reply":"Certainly! I'll split the bill and bring you a to-go box.","acceptable_keywords":["split the bill","to-go box"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S5_02A","trigger":["B"],"panic_scene":"お客さんが食べ残しをポケットに詰め始めて店内がカオスに！","manager_scream":"ちょっと！`separate checks` は「別々の伝票（お会計別々）」、`leftovers` は「食べ残し」よ！`split the bill`（割り勘にする）と `to-go box` を覚えなさい！"}],"tip_reaction":{"manager_praise":"スマートね！`split the bill` と `to-go box`（または `doggy bag`）、海外旅行でも超役立つわよ！","tip_dollars":15,"reputation_up":18},"practical_note":{"headline":"海外レストラン必須表現：「separate checks / split the bill（別会計）」「to-go box（持ち帰り容器）」","key_phrase":"Could we have the check, please?（お会計をお願いします） / Keep the change.（お釣りは結構です）","listening_tip":"アメリカではお会計のことを「check」、イギリスやホテルでは「bill」と言うことが多い！"}},{"shift_id":"S5_Q03","topic_tag":"病院・薬局での体調説明","weakness_category":"rush_clinic","input_mode":"rush_reply","audio_line_en":"A guest says they have a terrible headache and a fever! Ask them if they are allergic to any medicine!","audio_line_ja":"お客さんがひどい頭痛と熱があるって！何かの薬にアレルギーがあるか（allergic to any medicine）聞いてあげて！","speaker_role":"支配人・ヴィクトリア","choices":[],"correct_answer":{"canonical_reply":"Are you allergic to any medicine?","acceptable_keywords":["allergic","allergy","medicine"]},"panic_comedies":[{"trap_id":"T_S5_03A","trigger":["eat","hungry","sleep"],"misuse_meaning":"","panic_scene":"救急隊員が到着したのに薬のアレルギー情報が確認できず大慌て！","manager_scream":"今は食事の話じゃないわ！`Are you allergic to 〜?（〜にアレルギーはありますか？）` って聞くのよ！"}],"tip_reaction":{"manager_praise":"迅速で正確ね！`I have a fever / headache` と `Are you allergic to 〜?` は海外で命を守る英語よ！","tip_dollars":20,"reputation_up":20},"practical_note":{"headline":"海外での体調・病院フレーズ：「I have a headache / fever」「Are you allergic to 〜?」","key_phrase":"allergic（アラージック：形容詞） / allergy（アラジー：名詞）。発音とアクセントも重要！","listening_tip":"「prescription（処方箋）」や「over-the-counter（市販薬）」も知っておくと海外生活で困らない！"}}]},{"schema_version":"1.0.0","chapter_id":3,"chapter_title":"海外旅行・日常生活サバイバル（ホテル・レストラン・病院）","stage_id":"S-6","stage_title":"国際空港カウンター：乗り継ぎ・荷物紛失トラブル","target_level":"社会人・海外実務","workplace":"SkyLink Airport Desk","manager":{"name":"トム所長","personality":"フライト遅延やロストバゲージの嵐を笑顔とスピードでさばく空港のベテラン","shift_start_line":"大変だ、濃霧で便が遅延してる！乗客からの質問を聞き取って、代わりの便や荷物の手続きを案内しろ！"},"shifts":[{"shift_id":"S6_Q01","topic_tag":"フライト遅延と振替便（connecting flight）","weakness_category":"rush_airport_transfer","input_mode":"rush_choice","audio_line_en":"My flight was delayed, so I missed my connecting flight to London! Can you put me on the next available flight?","audio_line_ja":"便が遅延してロンドン行きの乗り継ぎ便（connecting flight）に乗り遅れました！次の空いている便に乗せてもらえますか？","speaker_role":"焦っている乗客","choices":[{"id":"A","label":"Of course. I'll rebook you on the next flight to London at no extra charge."},{"id":"B","label":"You should swim across the ocean to London."},{"id":"C","label":"Please buy a brand new ticket for 2,000 dollars."}],"correct_answer":{"canonical_reply":"Of course. I'll rebook you on the next flight to London at no extra charge.","acceptable_keywords":["rebook","next flight","no extra charge"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S6_01A","trigger":["B","C"],"panic_scene":"乗客が「航空会社の遅延なのに自腹かよ！」とカウンターを叩いて大騒ぎ！","manager_scream":"おい！航空会社側の遅延なら無料振替 `rebook 〜 at no extra charge`（追加料金なしで予約し直す）に決まってるだろ！"}],"tip_reaction":{"manager_praise":"完璧な対応だ！`missed my connecting flight` と `rebook` は海外出張・旅行で必ず役に立つぞ！","tip_dollars":18,"reputation_up":20},"practical_note":{"headline":"空港サバイバル英語：「connecting flight（乗り継ぎ便）」「rebook（予約を変更する）」","key_phrase":"at no extra charge（追加料金なしで） / boarding pass（搭乗券） / gate change（搭乗口変更）。","listening_tip":"アナウンスの「be delayed（遅れる）」「be canceled（欠航）」は即反応できるように！"}},{"shift_id":"S6_Q02","topic_tag":"ロストバゲージ（荷物が出てこない）","weakness_category":"rush_lost_baggage","input_mode":"rush_choice","audio_line_en":"My suitcase didn't come out on the baggage claim belt! What should I do?","audio_line_ja":"手荷物受取所のベルトコンベアから私のスーツケースが出てきません！どうすればいいですか？","speaker_role":"困っている乗客","choices":[{"id":"A","label":"Please show me your baggage claim tag and fill out this form. We will deliver it to your hotel."},{"id":"B","label":"Let's forget about your clothes and go shopping!"}],"correct_answer":{"canonical_reply":"Please show me your baggage claim tag and fill out this form. We will deliver it to your hotel.","acceptable_keywords":["tag","fill out","deliver"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S6_02A","trigger":["B"],"panic_scene":"乗客が「パソコンも薬も入ってるんだぞ！」と号泣してトム所長が頭を抱える！","manager_scream":"諦めさせるな！半券の `baggage claim tag` を確認して、書類に記入 `fill out this form` してもらい、ホテルに届けるんだ！"}],"tip_reaction":{"manager_praise":"落ち着いてて素晴らしい！`fill out this form（この用紙に記入する）` も超実用的だな！","tip_dollars":15,"reputation_up":18},"practical_note":{"headline":"手続き英語：「fill out this form（この書類に記入する）」「deliver it to 〜（〜へ届ける）」","key_phrase":"My luggage hasn't arrived yet.（私の荷物がまだ届いていません）","listening_tip":"海外旅行では「claim tag（荷物引換証）」を絶対に捨てずに持っておくのが鉄則！"}},{"shift_id":"S6_Q03","topic_tag":"入国審査・税関での目的説明","weakness_category":"rush_immigration","input_mode":"rush_reply","audio_line_en":"What is the purpose of your visit, and how long are you staying?","audio_line_ja":"（練習ロールプレイ）入国目的と滞在期間は？（例：観光で5日間です）","speaker_role":"トム所長（模擬審査）","choices":[],"correct_answer":{"canonical_reply":"I'm here for sightseeing, and I'm staying for five days.","acceptable_keywords":["sightseeing","business","vacation","staying","days","week"]},"panic_comedies":[{"trap_id":"T_S6_03A","trigger":["forever","secret","work no visa"],"misuse_meaning":"","panic_scene":"入国審査官がサイレンを鳴らして別室送りにしようとしている！","manager_scream":"おい！観光なら `sightseeing` か `vacation`、仕事なら `business` と滞在日数（`for five days`）をはっきり言わないと怪しまれるぞ！"}],"tip_reaction":{"manager_praise":"完璧な即答だ！これで世界中のどの空港でも笑顔で通過できるな！","tip_dollars":15,"reputation_up":18},"practical_note":{"headline":"入国審査の定番2質問：「Purpose of visit?（目的）」＆「How long?（期間）」","key_phrase":"Sightseeing / Business / Visiting friends. For 5 days / For one week.","listening_tip":"「Where are you staying?（どこに泊まりますか？）」と聞かれたらホテル名を答える！"}}]}]},{"schema_version":"1.0.0","chapter_id":4,"chapter_title":"社会に出て困らない！ビジネス英語＆交渉・トラブル対応","stages":[{"schema_version":"1.0.0","chapter_id":4,"chapter_title":"社会に出て困らない！ビジネス英語＆交渉・トラブル対応","stage_id":"S-7","stage_title":"ニューヨーク支社インターン：電話応対・会議日程調整","target_level":"社会人・海外実務","workplace":"Global Tech NY Office","manager":{"name":"ケンジ部長","personality":"外資系企業の超せっかち上司。メールや電話のリスケ・英語の丁寧表現をミスると即フィードバックしてくる","shift_start_line":"よう、今日からニューヨーク支社のインターンだ！社会に出ても困らないビジネス英語の電話・アポ調整を3秒でこなしてくれ！"},"shifts":[{"shift_id":"S7_Q01","topic_tag":"ビジネス電話の取次（He is in a meeting）","weakness_category":"rush_biz_phone","input_mode":"rush_choice","audio_line_en":"Hello, may I speak to Mr. Kenji? It's urgent!","audio_line_ja":"もしもし、ケンジさんをお願いできますか？急ぎなんです！（※ケンジ部長は今会議中で席を外している）","speaker_role":"取引先のクライアント","choices":[{"id":"A","label":"I'm afraid he is in a meeting right now. May I take a message?"},{"id":"B","label":"He is busy, so call again later. Bye!"},{"id":"C","label":"Who are you? He doesn't want to talk to you."}],"correct_answer":{"canonical_reply":"I'm afraid he is in a meeting right now. May I take a message?","acceptable_keywords":["afraid","meeting","take a message"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S7_01A","trigger":["B","C"],"panic_scene":"1億円の大口クライアントが「なんて失礼な会社だ！契約解除だ！」と電話を叩き切る！","manager_scream":"おい！！契約が飛んだぞ！！電話の定番は `I'm afraid he's in a meeting（あいにく会議中でして）` と `May I take a message?（ご伝言をお預かりしましょうか？）` だ！"}],"tip_reaction":{"manager_praise":"完璧なビジネス電話対応だ！`I'm afraid...（あいにく〜）` が自然に使えるとはプロだな！","tip_dollars":20,"reputation_up":25},"practical_note":{"headline":"ビジネス電話の黄金セット：「I'm afraid 〜（あいにく）」「May I take a message?（伝言を承りましょうか）」","key_phrase":"Hold on, please. / One moment, please.（少々お待ちください） / Could you spell your name?（お名前の綴りを伺えますか）","listening_tip":"電話越しでは「Could you speak a little more slowly?（もう少しゆっくり話していただけますか）」も必須！"}},{"shift_id":"S7_Q02","topic_tag":"会議の日程調整・リスケ（reschedule）","weakness_category":"rush_biz_reschedule","input_mode":"rush_choice","audio_line_en":"Something urgent came up, so I won't be able to make it to tomorrow's meeting. Can we push it back to Friday?","audio_line_ja":"急用ができて明日の会議に出られなくなりました。金曜日に後ろ倒し（push back）できますか？","speaker_role":"パートナー企業の担当者","choices":[{"id":"A","label":"Sure, no problem. Let's reschedule it for Friday at the same time."},{"id":"B","label":"Okay, let's move it earlier to yesterday."}],"correct_answer":{"canonical_reply":"Sure, no problem. Let's reschedule it for Friday at the same time.","acceptable_keywords":["reschedule","Friday"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S7_02A","trigger":["B"],"panic_scene":"タイムマシン会議を要求して相手が「？？？」とフリーズ！","manager_scream":"`make it（予定に間に合う・出席する）` と `push back（後ろ倒しにする）` を聞き取れ！日程変更は `reschedule it for 金曜日` だ！"}],"tip_reaction":{"manager_praise":"ナイス調整！`make it` と `push back`（逆に前倒しは `bring forward / move up`）を完璧に聞き取ったな！","tip_dollars":20,"reputation_up":22},"practical_note":{"headline":"ビジネス予定調整：「make it（出席する）」「push back（延期）」「move up（前倒し）」","key_phrase":"Does Friday at 2 PM work for you?（金曜の午後2時はご都合いかがでしょうか？）","listening_tip":"「Something came up.（急用が入った）」は仕事で毎週のように聞くフレーズ！"}},{"shift_id":"S7_Q03","topic_tag":"会議での確認・言い換え（In other words / Clarify）","weakness_category":"rush_biz_clarify","input_mode":"rush_reply","audio_line_en":"The client is speaking too fast with technical jargon! Politely ask them to clarify what they mean by 'ASAP' or explain it simply.","audio_line_ja":"クライアントが専門用語で早口だ！「どういう意味か明確にしてもらえますか（clarify / mean by）」と丁寧に聞き返して！","speaker_role":"ケンジ部長","choices":[],"correct_answer":{"canonical_reply":"Could you clarify what you mean by that?","acceptable_keywords":["clarify","what you mean","explain","mean by","pardon"]},"panic_comedies":[{"trap_id":"T_S7_03A","trigger":["huh?","what?","ok yes"],"misuse_meaning":"","panic_scene":"わかったフリをして『OK Yes!』と言った結果、明日朝イチの納品を引き受けてしまいオフィスが徹夜地獄に！","manager_scream":"わかったフリをするのが一番危険だ！ビジネスのプロは `Could you clarify what you mean by 〜?` で堂々と確認するんだ！"}],"tip_reaction":{"manager_praise":"素晴らしいプロ意識だ！`clarify`（明確にする）を使えればどんな英語会議でも主導権を握れるぞ！","tip_dollars":25,"reputation_up":25},"practical_note":{"headline":"知ったかぶりを防ぐ最強表現：「Could you clarify what you mean by 〜?」","key_phrase":"Just to make sure, you mean...?（確認のためですが、つまり〜ということでしょうか？） / ASAP ＝ As Soon As Possible（できるだけ早く）。","listening_tip":"「What?」と1語で聞き返すのは失礼に聞こえるので、「Sorry, could you say that again?」を使う！"}}]},{"schema_version":"1.0.0","chapter_id":4,"chapter_title":"社会に出て困らない！ビジネス英語＆交渉・トラブル対応","stage_id":"S-8","stage_title":"グローバル緊急対応室：納期交渉・クレーム＆プレゼン締め","target_level":"社会人・海外実務","workplace":"Global HQ Crisis Room","manager":{"name":"CEO・アレックス","personality":"世界中のクレームと交渉を1人でさばく伝説のCEO。論理的で相手を立てる英語に最高の評価をくれる","shift_start_line":"最終シフトだ！納期交渉、お詫びと代替案、そしてプレゼンの締めまで——受験英語から実社会英語のすべてをここで出し切れ！"},"shifts":[{"shift_id":"S8_Q01","topic_tag":"納期・条件交渉（If we..., would you be able to...?）","weakness_category":"rush_biz_negotiation","input_mode":"rush_choice","audio_line_en":"We need the final report by Monday, or we'll miss the board meeting!","audio_line_ja":"月曜までに最終レポートが必要なんだ、でないと役員会に間に合わない！（※実際は火曜までかかるが、月曜朝にドラフト＝下書きなら出せる）","speaker_role":"CEO・アレックス","choices":[{"id":"A","label":"We can send you a draft by Monday morning, and the final version on Tuesday. Would that work for you?"},{"id":"B","label":"Impossible. Wait until Tuesday and don't complain."}],"correct_answer":{"canonical_reply":"We can send you a draft by Monday morning, and the final version on Tuesday. Would that work for you?","acceptable_keywords":["draft","Tuesday","work for you"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S8_01A","trigger":["B"],"panic_scene":"CEOが「文句言うなとは何事だ！」とイスから転げ落ちる！","manager_scream":"交渉では単に『Impossible（無理）』と突っぱねるな！『月曜朝にドラフト、火曜に最終版ならどうですか？(Would that work for you?)』と代替案を出すんだ！"}],"tip_reaction":{"manager_praise":"お見事！代案提示＋`Would that work for you?` は世界のどこでも通用する交渉術だ！","tip_dollars":30,"reputation_up":25},"practical_note":{"headline":"ビジネス交渉の極意：「No ではなく 代替案 ＋ Would that work for you?（それで大丈夫ですか？）」","key_phrase":"by Monday（月曜までに：期限） vs until Monday（月曜までずっと：継続）。受験でも社会でも絶対区別！","listening_tip":"「by」と「until」を間違えると納期の約束が崩壊するので要注意！"}},{"shift_id":"S8_Q02","topic_tag":"プレゼン・スピーチの締め（Q&A対応）","weakness_category":"rush_biz_presentation","input_mode":"rush_choice","audio_line_en":"Great presentation! Now wrap it up and invite questions from the audience!","audio_line_ja":"素晴らしいプレゼンだった！さあ綺麗に締めて、聴衆から質問を受け付けてくれ！","speaker_role":"CEO・アレックス","choices":[{"id":"A","label":"Thank you for your attention. I'd be happy to take any questions you may have."},{"id":"B","label":"I finished talking. Please go home now."}],"correct_answer":{"canonical_reply":"Thank you for your attention. I'd be happy to take any questions you may have.","acceptable_keywords":["attention","questions"],"choice_id":"A"},"panic_comedies":[{"trap_id":"T_S8_02A","trigger":["B"],"panic_scene":"投資家たちが「もう帰れって言われた！」とザワつきながら一斉退出！","manager_scream":"おいｗ プレゼンの締めは `Thank you for your attention.（ご清聴ありがとうございました）` と `I'd be happy to take any questions.（ご質問をお受けします）` だ！"}],"tip_reaction":{"manager_praise":"拍手喝采だ！理系の学会発表でも文系のビジネスプレゼンでもそのまま使える完璧な締めだぞ！","tip_dollars":30,"reputation_up":25},"practical_note":{"headline":"英語プレゼンの締め：「Thank you for your attention. / Any questions?」","key_phrase":"That's a great question.（いい質問ですね＝考えをまとめる時間稼ぎにも使える魔法の一言！）","listening_tip":"質問が聞き取れなかったら「Could you repeat the last part of your question?」でスマートに聞き直す！"}},{"shift_id":"S8_Q03","topic_tag":"総合ラスト：トラブル報告と感謝の挨拶","weakness_category":"rush_final_boss","input_mode":"rush_reply","audio_line_en":"Final test! Tell our overseas partner: 'Thank you for your patience, we really appreciate your cooperation!'","audio_line_ja":"最終テスト！海外パートナーへ「お待ちいただきありがとうございます。ご協力に心から感謝します！」と英語で返せ！","speaker_role":"CEO・アレックス","choices":[],"correct_answer":{"canonical_reply":"Thank you for your patience. We really appreciate your cooperation!","acceptable_keywords":["patience","appreciate","cooperation","thank you"]},"panic_comedies":[{"trap_id":"T_S8_03A","trigger":["sorry wait","appreciate you"],"misuse_meaning":"","panic_scene":"CEOが「待たせたときに『Sorry for waiting』って言ったら相手が待ったことにならなくなるぞ！」とツッコむ！","manager_scream":"お待たせしましたは `Thank you for waiting / Thank you for your patience`、感謝は `appreciate your cooperation` だ！最後ビシッと決めろ！"}],"tip_reaction":{"manager_praise":"完璧すぎる！！お前なら高校受験・大学受験のリスニングも、海外旅行も、外資系の仕事も100%通用する！最高時給＆名誉店長に任命だ！！","tip_dollars":100,"reputation_up":50},"practical_note":{"headline":"「お待たせしました」＝「Thank you for your patience / waiting」（× Sorry for waiting）","key_phrase":"We appreciate your cooperation / understanding.（ご協力・ご理解に感謝いたします）","listening_tip":"全8シフト完了！実際の海外現場でも、まずはこのフレーズ集を声に出して使ってみよう！"}}]}]}];
+</script>
+<script>
+/* === LOGIC START === */
+const ManagerLogic = (() => {
+// テキスト正規化：空白・句読点・記号を除去し小文字化する（姉妹アプリと同一方式）
+function normalizeText(s) {
+  if (s == null) return "";
+  let t = String(s);
+  t = t.replace(/[ァ-ヶ]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60));
+  t = t.replace(/[\s　、。，．・：；:;,.「」『』（）()［］<>＜＞!?！？〜~～…‥"”'’`｜|/／\\\-ー―_]/g, "");
+  return t.toLowerCase();
+}
+
+// acceptable_keywords を「言い換えファミリー」にまとめる。
+// 一方が他方を内包するキーワード同士は同じファミリーとして1つに数える。
+function keywordFamilies(q) {
+  const raw = [...new Set((q.correct_answer?.acceptable_keywords || []).map(normalizeText).filter(Boolean))];
+  const families = [];
+  for (const kw of raw) {
+    let placed = false;
+    for (const fam of families) {
+      if (fam.some((m) => m.includes(kw) || kw.includes(m))) { fam.push(kw); placed = true; break; }
+    }
+    if (!placed) families.push([kw]);
+  }
+  return families;
+}
+function familyHits(q, normalizedInput) {
+  return keywordFamilies(q).filter((fam) => fam.some((m) => normalizedInput.includes(m))).length;
+}
+// 自由入力の正解しきい値：模範解答（canonical_reply）自身が充足するファミリー数を上限2・下限1として使う。
+function freeNeed(q) {
+  const canonHits = familyHits(q, normalizeText(q.correct_answer?.canonical_reply || ""));
+  return Math.min(2, Math.max(1, canonHits));
+}
+function usableKeywords(q) {
+  return [...new Set((q.correct_answer?.acceptable_keywords || []).map(normalizeText).filter(Boolean))];
+}
+
+// 自由入力のトラップ照合（トラップ優先。ただし誤爆防止ガード2種つき・姉妹アプリと同一方式）
+// ガード1：trigger を内包する acceptable キーワードが入力に含まれていれば、その trigger は除外
+// ガード2：trigger と無関係な核心キーワードだけですでに正解しきい値に達している入力は、
+//         汎用的な trigger 語の混入で上書きしない
+function matchTrapByText(q, normalizedInput) {
+  const acceptN = usableKeywords(q);
+  const need = freeNeed(q);
+  for (const trap of q.panic_comedies || []) {
+    for (const trig of trap.trigger || []) {
+      const tn = normalizeText(trig);
+      if (!tn) continue;
+      if (!normalizedInput.includes(tn)) continue;
+      if (acceptN.some((a) => a.includes(tn) && normalizedInput.includes(a))) continue;
+      const independentHits = keywordFamilies(q)
+        .filter((fam) => !fam.some((m) => m.includes(tn)))
+        .filter((fam) => fam.some((m) => normalizedInput.includes(m))).length;
+      if (independentHits >= need) continue;
+      return trap;
+    }
+  }
+  return null;
+}
+
+function judgeFreeText(q, input) {
+  const n = normalizeText(input);
+  if (!n) return { result: "fallback", trap: null, hits: 0 };
+  const trap = matchTrapByText(q, n);
+  if (trap) return { result: "trap", trap, hits: 0 };
+  const hits = familyHits(q, n);
+  if (hits >= freeNeed(q)) return { result: "correct", trap: null, hits };
+  return { result: "fallback", trap: null, hits };
+}
+
+function findChoice(q, choiceId) {
+  return (q.choices || []).find((c) => c.id === choiceId) || null;
+}
+function matchTrapByChoice(q, choiceId) {
+  for (const trap of q.panic_comedies || []) {
+    for (const trig of trap.trigger || []) {
+      if (trig === choiceId) return trap;
+    }
+  }
+  return null;
+}
+function judgeChoice(q, choiceId) {
+  // トラップ照合を正解判定より優先する（指令書・姉妹アプリの方式）
+  const trap = matchTrapByChoice(q, choiceId);
+  if (trap) return { result: "trap", trap };
+  if (q.correct_answer && choiceId === q.correct_answer.choice_id) {
+    return { result: "correct", trap: null };
+  }
+  return { result: "fallback", trap: null };
+}
+
+// レベル絞込：target_level の表記で振り分ける（大学受験＝共通テスト＋難関大）
+function matchesLevel(stage, filter) {
+  if (!filter || filter === "all") return true;
+  const lvl = stage.target_level || "";
+  if (filter === "junior") return lvl.includes("高校受験");
+  if (filter === "univ") return lvl.includes("共通テスト") || lvl.includes("難関大");
+  if (filter === "business") return lvl.includes("社会人");
+  return true;
+}
+
+// 集計
+function allQuestions(chapters) {
+  const out = [];
+  chapters.forEach((c) => c.stages.forEach((st) => st.shifts.forEach((q) => out.push({ chapter: c, stage: st, q }))));
+  return out;
+}
+function totalQuestionsOf(chapters) { return allQuestions(chapters).length; }
+function totalTipsOf(chapters) {
+  return allQuestions(chapters).reduce((n, { q }) => n + (q.tip_reaction?.tip_dollars || 0), 0);
+}
+function totalRepOf(chapters) {
+  return allQuestions(chapters).reduce((n, { q }) => n + (q.tip_reaction?.reputation_up || 0), 0);
+}
+
+// 店員ランク（評判の達成率で6段階）
+const RANK_TITLES = [
+  { ratio: 0.95, title: "伝説の店長" },
+  { ratio: 0.75, title: "店長" },
+  { ratio: 0.55, title: "副店長" },
+  { ratio: 0.35, title: "フロアリーダー" },
+  { ratio: 0.15, title: "レギュラーバイト" },
+  { ratio: 0.0, title: "見習いバイト" },
+];
+function rankFor(rep, totalRep) {
+  const ratio = totalRep > 0 ? rep / totalRep : 0;
+  for (let i = 0; i < RANK_TITLES.length; i++) {
+    if (ratio >= RANK_TITLES[i].ratio) {
+      const next = i > 0 ? Math.ceil(RANK_TITLES[i - 1].ratio * totalRep) : null;
+      return { title: RANK_TITLES[i].title, ratio, nextAt: next };
+    }
+  }
+  return { title: "見習いバイト", ratio: 0, nextAt: Math.ceil(RANK_TITLES[RANK_TITLES.length - 2].ratio * totalRep) };
+}
+
+// ---------- ディクテーション ----------
+function tokenizeWords(s) {
+  if (s == null) return [];
+  return String(s).toLowerCase()
+    .replace(/[.,!?;:"“”()\[\]]/g, " ")
+    .split(/[\s]+/)
+    .map((w) => w.replace(/^'+|'+$/g, ""))
+    .filter(Boolean);
+}
+// LCS で target の単語列と input の単語列を対応付け、単語単位の正誤を返す
+function dictationCheck(target, input) {
+  const T = tokenizeWords(target);
+  const I = tokenizeWords(input);
+  const m = T.length, n = I.length;
+  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = m - 1; i >= 0; i--) {
+    for (let j = n - 1; j >= 0; j--) {
+      dp[i][j] = T[i] === I[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    }
+  }
+  const matchedT = new Array(m).fill(false);
+  const matchedI = new Array(n).fill(false);
+  let i = 0, j = 0;
+  while (i < m && j < n) {
+    if (T[i] === I[j]) { matchedT[i] = true; matchedI[j] = true; i++; j++; }
+    else if (dp[i + 1][j] >= dp[i][j + 1]) i++;
+    else j++;
+  }
+  const hits = matchedT.filter(Boolean).length;
+  return {
+    score: m ? Math.round((hits / m) * 100) : 0,
+    tokens: T.map((w, k) => ({ word: w, ok: matchedT[k] })),
+    extras: I.filter((_, k) => !matchedI[k]),
+    hits, total: m,
+  };
+}
+
+// ---------- SRS（間隔反復） ----------
+const SRS_INTERVALS = [1, 3, 7, 14]; // stage 0→翌日, 1→3日, 2→7日, 3→14日
+function dateStr(d) {
+  const y = d.getFullYear(), mo = String(d.getMonth() + 1).padStart(2, "0"), da = String(d.getDate()).padStart(2, "0");
+  return `${y}-${mo}-${da}`;
+}
+function todayStr(now) { return dateStr(now || new Date()); }
+function addDays(str, n) {
+  const [y, mo, da] = str.split("-").map(Number);
+  const d = new Date(y, mo - 1, da);
+  d.setDate(d.getDate() + n);
+  return dateStr(d);
+}
+// prev: {stage, due} | null。正解で stage+1（上限は intervals の最後）、不正解で stage 0 に戻し翌日期限。
+function srsUpdate(prev, correct, today) {
+  const stage = prev && typeof prev.stage === "number" ? prev.stage : 0;
+  if (!correct) return { stage: 0, due: addDays(today, SRS_INTERVALS[0]) };
+  const ns = Math.min(stage + 1, SRS_INTERVALS.length - 1);
+  // 初回正解（prevなし）は stage 0 の間隔（翌日）から始める
+  const interval = prev ? SRS_INTERVALS[ns] : SRS_INTERVALS[0];
+  return { stage: prev ? ns : 0, due: addDays(today, interval) };
+}
+function isDue(srs, today) {
+  return !!(srs && srs.due && srs.due <= today);
+}
+
+// ---------- エンドレス抽選（重複制御つきデッキ） ----------
+function shuffleIds(ids, rng) {
+  const a = [...ids];
+  const rand = rng || Math.random;
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+// deck: {queue:[], last:id|null}。尽きたら再シャッフルし、直前と同じ問題が先頭なら入れ替える。
+function deckDraw(deck, allIds, rng) {
+  let queue = deck && Array.isArray(deck.queue) ? [...deck.queue] : [];
+  let last = deck ? deck.last : null;
+  if (!queue.length) {
+    queue = shuffleIds(allIds, rng);
+    if (queue.length > 1 && last && queue[0] === last) {
+      [queue[0], queue[1]] = [queue[1], queue[0]];
+    }
+  }
+  const id = queue.shift();
+  return { id, deck: { queue, last: id } };
+}
+
+return {
+  normalizeText, keywordFamilies, familyHits, freeNeed, usableKeywords,
+  matchTrapByText, judgeFreeText, judgeChoice, matchTrapByChoice, findChoice,
+  matchesLevel, allQuestions, totalQuestionsOf, totalTipsOf, totalRepOf,
+  rankFor, RANK_TITLES, tokenizeWords, dictationCheck,
+  SRS_INTERVALS, dateStr, todayStr, addDays, srsUpdate, isDue,
+  shuffleIds, deckDraw,
+};
+})();
+/* === LOGIC END === */
+</script>
+<script>
+"use strict";
+const L = ManagerLogic;
+const ALL = L.allQuestions(CHAPTERS);
+const QMAP = new Map(ALL.map((e) => [e.q.shift_id, e]));
+const TOTAL_TIPS = L.totalTipsOf(CHAPTERS);
+const TOTAL_REP = L.totalRepOf(CHAPTERS);
+const SPEEDS = [0.95, 1.1, 1.25, 1.4];
+
+/* ---------- 保存 ---------- */
+const PROGRESS_KEY = "manager.progress.v1";
+const MUTED_KEY = "manager.muted.v1";
+function defaultProg() {
+  return { q: {}, endless: { highTips: 0, highCombo: 0, plays: 0 }, streak: 0,
+           settings: { rate: 1.25, ta: false } };
+}
+let prog = defaultProg();
+try {
+  const raw = localStorage.getItem(PROGRESS_KEY);
+  if (raw) { const p = JSON.parse(raw); if (p && typeof p === "object") prog = Object.assign(defaultProg(), p); }
+} catch (e) {}
+if (!prog.settings) prog.settings = { rate: 1.25, ta: false };
+function saveProg() { try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(prog)); } catch (e) {} }
+function qState(id) {
+  if (!prog.q[id]) prog.q[id] = { cleared: false, wrong: 0, revealed: false, last: "", srsStage: null, srsDue: null, dict: 0, shadow: false };
+  return prog.q[id];
+}
+let muted = false;
+try { muted = localStorage.getItem(MUTED_KEY) === "1"; } catch (e) {}
+
+/* ---------- 効果音（Web Audio・三角波・約1.3kHz帯・ゲイン0.5） ---------- */
+let actx = null;
+function tone(freq, delay, dur, type = "triangle", vol = 0.5) {
+  if (muted) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === "suspended") actx.resume();
+    const t0 = actx.currentTime + delay;
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(vol, t0 + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+    o.connect(g); g.connect(actx.destination);
+    o.start(t0); o.stop(t0 + dur + 0.05);
+  } catch (e) {}
+}
+const sfx = {
+  click() { tone(1047, 0, 0.07); },
+  good() { tone(1319, 0, 0.12); tone(1568, 0.09, 0.12); tone(2093, 0.18, 0.22); },
+  tip() { tone(1568, 0, 0.09); tone(2093, 0.07, 0.16); },
+  bad() { tone(392, 0, 0.16, "triangle", 0.5); tone(311, 0.13, 0.24, "triangle", 0.5); },
+  fanfare() { [1319, 1568, 1760, 2093].forEach((f, i) => tone(f, i * 0.09, 0.2)); },
+};
+function refreshSoundToggles() {
+  document.querySelectorAll("[data-sound-toggle]").forEach((b) => { b.textContent = muted ? "音：オフ" : "音：オン"; });
+}
+document.querySelectorAll("[data-sound-toggle]").forEach((b) => {
+  b.addEventListener("click", () => {
+    muted = !muted;
+    try { localStorage.setItem(MUTED_KEY, muted ? "1" : "0"); } catch (e) {}
+    refreshSoundToggles();
+    if (!muted) sfx.click();
+  });
+});
+
+/* ---------- TTS（リスニングコンソール） ---------- */
+const TTS = {
+  speaking: false,
+  _utter: null,
+  init() {
+    if (!("speechSynthesis" in window)) return;
+    const load = () => { try { speechSynthesis.getVoices(); } catch (e) {} };
+    load();
+    if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = load;
+  },
+  pickVoice() {
+    if (!("speechSynthesis" in window)) return null;
+    let vs = [];
+    try { vs = speechSynthesis.getVoices() || []; } catch (e) {}
+    return vs.find((v) => /^en[-_]US$/i.test(v.lang))
+        || vs.find((v) => /^en[-_]US/i.test(v.lang))
+        || vs.find((v) => /^en/i.test(v.lang))
+        || vs.find((v) => v.default) || vs[0] || null;
+  },
+  speak(text, rate, onend) {
+    if (!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") {
+      if (onend) onend();
+      return false;
+    }
+    this.stop();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    const v = this.pickVoice();
+    if (v) u.voice = v;
+    u.rate = rate || prog.settings.rate || 1.25;
+    this._utter = u;
+    this.speaking = true;
+    const done = () => { if (this._utter === u) { this.speaking = false; this._utter = null; refreshSpeakingUI(); if (onend) onend(); } };
+    u.onend = done; u.onerror = done;
+    refreshSpeakingUI();
+    try { speechSynthesis.speak(u); } catch (e) { done(); return false; }
+    return true;
+  },
+  stop() {
+    if (!("speechSynthesis" in window)) return;
+    try { speechSynthesis.cancel(); } catch (e) {}
+    this.speaking = false; this._utter = null;
+    refreshSpeakingUI();
+  },
+};
+function refreshSpeakingUI() {
+  document.querySelectorAll(".stop-btn").forEach((b) => b.classList.toggle("show", TTS.speaking));
+}
+function speakableEn(text) {
+  const s = String(text || "");
+  const m = s.match(/[぀-ヿ一-鿿]/);
+  const cut = m ? s.slice(0, m.index) : s;
+  return cut.replace(/[（(].*$/, "").trim();
+}
+
+/* ---------- 店長の顔（パラメトリックSVG） ---------- */
+const FACE_CONF = {
+  "S-1": { skin: "#f2c094", hair: "#402a16", kind: "cap", cap: "#c22f2f" },
+  "S-2": { skin: "#ffd9b3", hair: "#7a421f", kind: "ponytail", female: 1 },
+  "S-3": { skin: "#eab086", hair: "#4c3a28", kind: "cap", cap: "#16324f", glasses: 1 },
+  "S-4": { skin: "#ffd9b3", hair: "#2e2a26", kind: "bun", glasses: 1, female: 1 },
+  "S-5": { skin: "#ffe0bd", hair: "#8a5a20", kind: "updo", female: 1, earrings: 1, mole: 1 },
+  "S-6": { skin: "#f2c094", hair: "#333333", kind: "cap", cap: "#16324f", mustache: 1, badge: 1 },
+  "S-7": { skin: "#f7cf9f", hair: "#1d1d22", kind: "neat", tie: 1 },
+  "S-8": { skin: "#eec39a", hair: "#b9bdc4", kind: "neat", stern: 1, tie: 1 },
+};
+function faceSVG(stageId, emotion = "normal", size = 62) {
+  const c = FACE_CONF[stageId] || FACE_CONF["S-1"];
+  const ink = "#23272f";
+  let hair = "";
+  if (c.kind === "cap") {
+    hair = `<path d="M14 44 A36 36 0 0 1 86 44 Z" fill="${c.cap}"/>
+            <rect x="8" y="42" width="84" height="7" rx="3.5" fill="${c.cap}"/>
+            ${c.badge ? '<circle cx="50" cy="26" r="6" fill="#eec25e" stroke="#8a6410" stroke-width="1.5"/>' : ""}`;
+  } else if (c.kind === "ponytail") {
+    hair = `<path d="M14 52 A36 36 0 0 1 86 52 L86 40 A36 30 0 0 0 14 40 Z" fill="${c.hair}"/>
+            <circle cx="88" cy="58" r="10" fill="${c.hair}"/>`;
+  } else if (c.kind === "bun") {
+    hair = `<circle cx="50" cy="12" r="11" fill="${c.hair}"/>
+            <path d="M14 50 A36 36 0 0 1 86 50 L86 42 A36 30 0 0 0 14 42 Z" fill="${c.hair}"/>`;
+  } else if (c.kind === "updo") {
+    hair = `<ellipse cx="50" cy="16" rx="17" ry="12" fill="${c.hair}"/>
+            <path d="M14 50 A36 36 0 0 1 86 50 L86 42 A36 30 0 0 0 14 42 Z" fill="${c.hair}"/>`;
+  } else {
+    hair = `<path d="M14 50 A36 36 0 0 1 86 50 L86 40 A36 31 0 0 0 14 40 Z" fill="${c.hair}"/>`;
+  }
+  let brows, eyes, mouth;
+  if (emotion === "scream") {
+    brows = `<path d="M28 40 L44 35 M72 40 L56 35" stroke="${ink}" stroke-width="3.4" stroke-linecap="round"/>`;
+    eyes = `<ellipse cx="36" cy="52" rx="6.4" ry="7.6" fill="#fff" stroke="${ink}" stroke-width="1.6"/><ellipse cx="64" cy="52" rx="6.4" ry="7.6" fill="#fff" stroke="${ink}" stroke-width="1.6"/>
+            <circle cx="36" cy="53" r="3" fill="${ink}"/><circle cx="64" cy="53" r="3" fill="${ink}"/>`;
+    mouth = `<ellipse cx="50" cy="76" rx="9" ry="11" fill="#7a1f1f" stroke="${ink}" stroke-width="2"/><ellipse cx="50" cy="81" rx="5.4" ry="4.6" fill="#d96a6a"/>`;
+  } else if (emotion === "happy") {
+    brows = `<path d="M28 42 Q36 38 44 42 M56 42 Q64 38 72 42" stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    eyes = `<path d="M28 54 Q36 46 44 54 M56 54 Q64 46 72 54" stroke="${ink}" stroke-width="3.4" fill="none" stroke-linecap="round"/>`;
+    mouth = `<path d="M36 68 Q50 82 64 68 Q50 74 36 68 Z" fill="#7a1f1f" stroke="${ink}" stroke-width="2"/>`;
+  } else {
+    const bo = c.stern ? 2.5 : 0;
+    brows = `<path d="M28 ${42 + bo} L44 ${40 + (c.stern ? 3 : 0)} M72 ${42 + bo} L56 ${40 + (c.stern ? 3 : 0)}" stroke="${ink}" stroke-width="3.2" stroke-linecap="round"/>`;
+    eyes = `<circle cx="36" cy="53" r="4.4" fill="${ink}"/><circle cx="64" cy="53" r="4.4" fill="${ink}"/>
+            <circle cx="37.6" cy="51.4" r="1.5" fill="#fff"/><circle cx="65.6" cy="51.4" r="1.5" fill="#fff"/>`;
+    mouth = c.female
+      ? `<path d="M40 71 Q50 77 60 71" stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"/>`
+      : `<path d="M41 72 L59 72" stroke="${ink}" stroke-width="3.2" stroke-linecap="round"/>`;
+  }
+  const glasses = c.glasses ? `<g stroke="${ink}" stroke-width="2.4" fill="rgba(255,255,255,.12)"><rect x="24" y="44" width="24" height="18" rx="5"/><rect x="52" y="44" width="24" height="18" rx="5"/><path d="M48 50 L52 50" fill="none"/></g>` : "";
+  const mustache = c.mustache ? `<path d="M50 66 Q40 60 33 65 Q40 71 50 69 Q60 71 67 65 Q60 60 50 66 Z" fill="#333"/>` : "";
+  const earrings = c.earrings ? `<circle cx="13.5" cy="64" r="3" fill="#eec25e" stroke="#8a6410"/><circle cx="86.5" cy="64" r="3" fill="#eec25e" stroke="#8a6410"/>` : "";
+  const mole = c.mole ? `<circle cx="66" cy="66" r="1.7" fill="#5a3a1a"/>` : "";
+  const tie = c.tie ? `<path d="M44 88 L56 88 L50 99 Z" fill="#8a1f2d"/><rect x="46.5" y="84" width="7" height="5" fill="#8a1f2d"/>` : "";
+  const sweat = emotion === "scream" ? `<path d="M88 30 Q93 39 88 43 Q83 39 88 30 Z" fill="#7ec3ee" stroke="#3a7ab5" stroke-width="1.2"/>` : "";
+  const headset = stageId === "S-2" ? `<path d="M16 46 A36 36 0 0 1 84 46" stroke="#23272f" stroke-width="3.4" fill="none"/><rect x="76" y="62" width="5" height="12" rx="2.5" fill="#23272f" transform="rotate(-24 78 68)"/><circle cx="71" cy="76" r="3.4" fill="#23272f"/>` : "";
+  return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" aria-hidden="true">
+    <circle cx="50" cy="50" r="47" fill="${c.skin}"/>
+    ${hair}${earrings}
+    ${brows}${eyes}${glasses}${mouth}${mustache}${mole}${tie}${headset}${sweat}
+  </svg>`;
+}
+
+/* ---------- 紙吹雪 ---------- */
+const confetti = (() => {
+  const cv = document.getElementById("confetti-canvas");
+  const ctx = cv.getContext("2d");
+  let parts = [], running = false;
+  function resize() { cv.width = innerWidth; cv.height = innerHeight; }
+  addEventListener("resize", resize); resize();
+  function burst(n = 90) {
+    const colors = ["#eec25e", "#c9962e", "#27ae60", "#1f4a73", "#dc2626", "#7c3aed"];
+    for (let i = 0; i < n; i++) {
+      parts.push({
+        x: innerWidth / 2 + (Math.random() - 0.5) * innerWidth * 0.5,
+        y: innerHeight * 0.32, vx: (Math.random() - 0.5) * 9, vy: -Math.random() * 9 - 3,
+        w: 5 + Math.random() * 6, h: 8 + Math.random() * 8,
+        rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.3,
+        color: colors[i % colors.length], life: 70 + Math.random() * 40,
+      });
+    }
+    if (!running) { running = true; cv.style.display = "block"; requestAnimationFrame(tick); }
+  }
+  function tick() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    parts = parts.filter((p) => p.life > 0 && p.y < cv.height + 30);
+    for (const p of parts) {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.28; p.vx *= 0.99; p.rot += p.vr; p.life--;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.color; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+    }
+    if (parts.length) requestAnimationFrame(tick);
+    else { running = false; cv.style.display = "none"; }
+  }
+  return { burst };
+})();
+function showTipFx(dollars) {
+  const el = document.getElementById("fx-tip");
+  el.textContent = `💰 +$${dollars} TIP!`;
+  el.classList.remove("show"); void el.offsetWidth; el.classList.add("show");
+  setTimeout(() => el.classList.remove("show"), 950);
+}
+
+/* ---------- 画面遷移 ---------- */
+let currentScreen = "screen-title";
+function showScreen(id) {
+  TTS.stop();
+  stopTimer();
+  document.querySelectorAll(".screen").forEach((s) => s.classList.toggle("active", s.id === id));
+  currentScreen = id;
+  const sc = document.querySelector(`#${id} .scroll-body`);
+  if (sc) sc.scrollTop = 0;
+}
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+/* ---------- 集計 ---------- */
+function earnedTotals() {
+  let tips = 0, rep = 0, cleared = 0;
+  for (const { q } of ALL) {
+    const st = prog.q[q.shift_id];
+    if (st && st.cleared) { tips += q.tip_reaction.tip_dollars; rep += q.tip_reaction.reputation_up; cleared++; }
+  }
+  return { tips, rep, cleared };
+}
+function dueList() {
+  const today = L.todayStr();
+  return ALL.filter(({ q }) => {
+    const st = prog.q[q.shift_id];
+    return st && st.srsDue && L.isDue({ due: st.srsDue }, today);
+  });
+}
+function reviewList() {
+  return ALL.filter(({ q }) => {
+    const st = prog.q[q.shift_id];
+    return st && (st.last === "wrong" || st.last === "revealed");
+  });
+}
+function stageProgress(stage) {
+  const done = stage.shifts.filter((q) => prog.q[q.shift_id]?.cleared).length;
+  return { done, total: stage.shifts.length };
+}
+
+/* ---------- タイトル ---------- */
+let levelFilter = "all";
+function renderTitle() {
+  document.getElementById("title-faces").innerHTML =
+    CHAPTERS.flatMap((c) => c.stages).map((st) =>
+      `<span class="ta-face">${faceSVG(st.stage_id, "normal", 46)}</span>`).join("");
+  const t = earnedTotals();
+  const rank = L.rankFor(t.rep, TOTAL_REP);
+  document.getElementById("title-stats").innerHTML = `
+    <span class="stat-chip">チップ <b>$${t.tips}</b> / $${TOTAL_TIPS}</span>
+    <span class="stat-chip">評判 <b>${t.rep}</b></span>
+    <span class="stat-chip">クリア <b>${t.cleared}</b> / 24問</span>
+    <span class="stat-chip">連続記録 <b>${prog.endless.highCombo}</b> コンボ</span>`;
+  document.getElementById("title-rank").textContent =
+    `現在のランク：${rank.title}` + (rank.nextAt ? `（あと評判 ${Math.max(0, rank.nextAt - t.rep)} で昇格）` : "（最高位！）");
+  const due = dueList().length, rev = reviewList().length;
+  const bs = document.getElementById("badge-srs"), br = document.getElementById("badge-review");
+  bs.style.display = due ? "inline-block" : "none"; bs.textContent = due;
+  br.style.display = rev ? "inline-block" : "none"; br.textContent = rev;
+  // 速度の自動提案（穏やか・強制なし）
+  const sb = document.getElementById("suggest-banner");
+  if (prog.streak >= 3 && (prog.settings.rate || 1.25) < 1.4) {
+    sb.classList.add("show");
+    sb.innerHTML = `🔥 ${prog.streak}問連続正解で好調です！次は最速の <b>1.4倍速</b> に挑戦しませんか？<br>
+      <button class="btn gold small" id="btn-speed-up">1.4倍速にする</button>
+      <button class="linklike" id="btn-speed-keep">今のまま</button>`;
+    document.getElementById("btn-speed-up").addEventListener("click", () => {
+      prog.settings.rate = 1.4; saveProg(); sfx.good(); renderTitle();
+    });
+    document.getElementById("btn-speed-keep").addEventListener("click", () => {
+      prog.streak = 0; saveProg(); sb.classList.remove("show");
+    });
+  } else sb.classList.remove("show");
+}
+
+/* ---------- マップ ---------- */
+const CH_COLORS = ["var(--ch1)", "var(--ch2)", "var(--ch3)", "var(--ch4)"];
+function renderMap() {
+  const t = earnedTotals();
+  const rank = L.rankFor(t.rep, TOTAL_REP);
+  document.getElementById("map-status").innerHTML = `
+    <div class="sc-big">店員ランク<b>${esc(rank.title)}</b></div>
+    <div class="progress-track"><div class="progress-fill" style="width:${Math.round(rank.ratio * 100)}%"></div></div>
+    <div class="sc-row"><span>💰 チップ $${t.tips}</span><span>⭐ 評判 ${t.rep}</span><span>✅ ${t.cleared}/24問</span></div>`;
+  document.querySelectorAll("#level-bar .level-chip").forEach((ch) =>
+    ch.classList.toggle("active", ch.dataset.level === levelFilter));
+  const today = L.todayStr();
+  document.getElementById("map-list").innerHTML = CHAPTERS.map((c, ci) => {
+    const stages = c.stages.filter((st) => L.matchesLevel(st, levelFilter));
+    if (!stages.length) return "";
+    return `<div class="chapter-block">
+      <div class="chapter-head" style="border-left-color:${CH_COLORS[ci]}">第${c.chapter_id}章 ${esc(c.chapter_title)}</div>
+      <div class="stages">${stages.map((st) => {
+        const p = stageProgress(st);
+        const dueN = st.shifts.filter((q) => {
+          const s = prog.q[q.shift_id];
+          return s && s.srsDue && L.isDue({ due: s.srsDue }, today);
+        }).length;
+        return `<button class="stage-card" data-stage="${st.stage_id}" style="border-left-color:${CH_COLORS[ci]}">
+          <span class="st-face">${faceSVG(st.stage_id, "normal", 54)}</span>
+          <span class="st-main">
+            <span class="st-id">${st.stage_id}｜${esc(st.target_level)}${dueN ? `<span class="due-tag">復習 ${dueN}</span>` : ""}</span>
+            <span class="st-title">${esc(st.stage_title)}</span>
+            <span class="st-meta">📍 ${esc(st.workplace)} ／ ${esc(st.manager.name)}</span>
+          </span>
+          <span class="st-prog">${p.done}/${p.total}<br>クリア</span>
+        </button>`;
+      }).join("")}</div></div>`;
+  }).join("");
+  document.querySelectorAll(".stage-card").forEach((b) =>
+    b.addEventListener("click", () => { sfx.click(); openIntro(b.dataset.stage); }));
+}
+function findStage(stageId) {
+  for (const c of CHAPTERS) for (const st of c.stages) if (st.stage_id === stageId) return { chapter: c, stage: st };
+  return null;
+}
+
+/* ---------- シフト紹介 ---------- */
+let introStageId = null;
+function openIntro(stageId) {
+  introStageId = stageId;
+  const { stage } = findStage(stageId);
+  document.getElementById("intro-title").textContent = `${stage.stage_id} ${stage.workplace}`;
+  document.getElementById("intro-body").innerHTML = `
+    <div class="intro-face-wrap">
+      <span class="ta-face">${faceSVG(stage.stage_id, "normal", 88)}</span>
+      <div><div class="if-name">${esc(stage.manager.name)}</div>
+      <div class="if-pers">${esc(stage.manager.personality)}</div></div>
+    </div>
+    <div class="speech">${esc(stage.manager.shift_start_line)}</div>
+    <div class="intro-list">
+      ${stage.shifts.map((q, i) => `<div class="il-row">
+        <span class="il-no">${i + 1}</span>
+        <span class="il-mode ${q.input_mode === "rush_reply" ? "reply" : ""}">${q.input_mode === "rush_reply" ? "自由入力" : "選択式"}</span>
+        <span>${esc(q.topic_tag)}${prog.q[q.shift_id]?.cleared ? " ✅" : ""}</span>
+      </div>`).join("")}
+    </div>
+    <label class="toggle-row">⏱️ 10秒制限タイムアタック
+      <span class="spacer"></span>
+      <span class="switch"><input type="checkbox" id="ta-toggle" ${prog.settings.ta ? "checked" : ""}><span class="sl"></span></span>
+    </label>
+    <div style="margin-top:16px;">
+      <button class="btn gold big" id="btn-start-shift">▶ シフト開始（音声が流れます）</button>
+    </div>`;
+  document.getElementById("ta-toggle").addEventListener("change", (e) => {
+    prog.settings.ta = e.target.checked; saveProg();
+  });
+  document.getElementById("btn-start-shift").addEventListener("click", () => {
+    const items = stage.shifts.map((q) => QMAP.get(q.shift_id));
+    startSession({ mode: "shift", title: `${stage.stage_id} ${stage.workplace}`, items, timerOn: prog.settings.ta });
+  });
+  showScreen("screen-intro");
+}
+</script>
+<script>
+"use strict";
+/* ---------- セッションエンジン ---------- */
+let SES = null;
+let timerId = null;
+function stopTimer() {
+  if (timerId) { clearInterval(timerId); timerId = null; }
+  const tt = document.getElementById("timer-track");
+  if (tt) tt.classList.remove("show");
+}
+function startTimer(sec, onExpire) {
+  stopTimer();
+  const track = document.getElementById("timer-track");
+  const fill = document.getElementById("timer-fill");
+  track.classList.add("show");
+  const total = sec * 1000;
+  let left = total;
+  fill.style.width = "100%"; fill.classList.remove("low");
+  timerId = setInterval(() => {
+    left -= 100;
+    const pct = Math.max(0, (left / total) * 100);
+    fill.style.width = pct + "%";
+    if (pct < 30) fill.classList.add("low");
+    if (left <= 0) { stopTimer(); onExpire(); }
+  }, 100);
+}
+
+function recordOutcome(qid, outcome) {
+  const st = qState(qid);
+  const today = L.todayStr();
+  if (outcome === "correct") {
+    st.cleared = true; st.last = "correct"; st.revealed = false;
+    const prev = st.srsStage === null || st.srsStage === undefined ? null : { stage: st.srsStage, due: st.srsDue };
+    const nx = L.srsUpdate(prev, true, today);
+    st.srsStage = nx.stage; st.srsDue = nx.due;
+    prog.streak = (prog.streak || 0) + 1;
+  } else if (outcome === "wrong") {
+    st.wrong = (st.wrong || 0) + 1; st.last = "wrong";
+    const nx = L.srsUpdate({ stage: st.srsStage || 0, due: st.srsDue }, false, today);
+    st.srsStage = nx.stage; st.srsDue = nx.due;
+    prog.streak = 0;
+  } else if (outcome === "revealed") {
+    st.last = "revealed"; st.revealed = true;
+    const nx = L.srsUpdate({ stage: st.srsStage || 0, due: st.srsDue }, false, today);
+    st.srsStage = nx.stage; st.srsDue = nx.due;
+    prog.streak = 0;
+  }
+  saveProg();
+}
+
+function startSession(opts) {
+  SES = {
+    mode: opts.mode, title: opts.title, items: opts.items || [], idx: 0,
+    timerOn: !!opts.timerOn, earnedTips: 0, earnedRep: 0,
+    correct: 0, answered: 0, combo: 0, maxCombo: 0,
+    deck: { queue: [], last: null }, fails: 0, locked: false, current: null,
+    subEn: false, subJa: false,
+  };
+  document.getElementById("session-title").textContent = opts.title;
+  showScreen("screen-session");
+  nextQuestion();
+}
+function showEmptySession(title, msg) {
+  document.getElementById("session-title").textContent = title;
+  document.getElementById("session-meta").innerHTML = "";
+  document.getElementById("feed").innerHTML = `<div class="empty-note">${msg}</div>`;
+  document.getElementById("session-actions").innerHTML =
+    `<button class="btn big" onclick="backToTitle()">タイトルへ戻る</button>`;
+  SES = null;
+  showScreen("screen-session");
+}
+function nextQuestion() {
+  if (!SES) return;
+  TTS.stop(); stopTimer();
+  let entry = null;
+  if (SES.mode === "endless") {
+    const ids = SES.items.map((e) => e.q.shift_id);
+    const drawn = L.deckDraw(SES.deck, ids);
+    SES.deck = drawn.deck;
+    entry = QMAP.get(drawn.id);
+    SES.idx++;
+  } else {
+    if (SES.idx >= SES.items.length) { finishSession(); return; }
+    entry = SES.items[SES.idx];
+    SES.idx++;
+  }
+  SES.current = entry; SES.fails = 0; SES.locked = false;
+  renderQuestion(entry);
+}
+function speedGroupHTML() {
+  return `<span class="speed-group">${SPEEDS.map((r) =>
+    `<button class="speed-btn ${Math.abs((prog.settings.rate || 1.25) - r) < 0.001 ? "active" : ""}" data-rate="${r}">${r.toFixed(2)}x</button>`).join("")}</span>`;
+}
+function wireSpeedGroup(root) {
+  root.querySelectorAll(".speed-btn").forEach((b) => b.addEventListener("click", () => {
+    prog.settings.rate = parseFloat(b.dataset.rate); saveProg(); sfx.click();
+    document.querySelectorAll(".speed-btn").forEach((x) =>
+      x.classList.toggle("active", Math.abs(parseFloat(x.dataset.rate) - prog.settings.rate) < 0.001));
+  }));
+}
+function consoleHTML(q) {
+  return `<div class="console">
+    <div class="cs-row">
+      <button class="play-btn" data-act="play">▶ 再生</button>
+      <button class="stop-btn" data-act="stop">■ 停止</button>
+      ${speedGroupHTML()}
+    </div>
+    <div class="cs-toggles">
+      <button class="tgl-chip ${SES && SES.subEn ? "active" : ""}" data-act="suben">英文字幕 ${SES && SES.subEn ? "ON" : "OFF"}</button>
+      <button class="tgl-chip ${SES && SES.subJa ? "active" : ""}" data-act="subja">日本語ヒント ${SES && SES.subJa ? "ON" : "OFF"}</button>
+    </div>
+    <div class="subtitle-en ${SES && SES.subEn ? "show" : ""}">${esc(q.audio_line_en)}</div>
+    <div class="hint-ja ${SES && SES.subJa ? "show" : ""}">${esc(q.audio_line_ja)}</div>
+  </div>`;
+}
+function wireConsole(root, q) {
+  wireSpeedGroup(root);
+  const play = root.querySelector('[data-act="play"]');
+  if (play) play.addEventListener("click", () => TTS.speak(q.audio_line_en, prog.settings.rate));
+  const stop = root.querySelector('[data-act="stop"]');
+  if (stop) stop.addEventListener("click", () => TTS.stop());
+  const se = root.querySelector('[data-act="suben"]');
+  if (se) se.addEventListener("click", () => {
+    SES.subEn = !SES.subEn;
+    root.querySelector(".subtitle-en").classList.toggle("show", SES.subEn);
+    se.classList.toggle("active", SES.subEn); se.textContent = `英文字幕 ${SES.subEn ? "ON" : "OFF"}`;
+  });
+  const sj = root.querySelector('[data-act="subja"]');
+  if (sj) sj.addEventListener("click", () => {
+    SES.subJa = !SES.subJa;
+    root.querySelector(".hint-ja").classList.toggle("show", SES.subJa);
+    sj.classList.toggle("active", SES.subJa); sj.textContent = `日本語ヒント ${SES.subJa ? "ON" : "OFF"}`;
+  });
+}
+function renderSessionMeta() {
+  const el = document.getElementById("session-meta");
+  if (!SES) { el.innerHTML = ""; return; }
+  const total = SES.mode === "endless" ? "∞" : SES.items.length;
+  el.innerHTML = `
+    <span>${esc(SES.title)}</span>
+    <span>📝 ${SES.idx} / ${total}</span>
+    <span>💰 +$${SES.earnedTips}</span>
+    <span class="combo-chip ${SES.combo >= 2 ? "show" : ""}">🔥 ${SES.combo}連続正解</span>
+    ${SES.timerOn ? "<span>⏱️ タイムアタック中</span>" : ""}`;
+}
+function renderQuestion(entry) {
+  const { stage, q } = entry;
+  renderSessionMeta();
+  const feed = document.getElementById("feed");
+  const isReply = q.input_mode === "rush_reply";
+  feed.innerHTML = `
+  <div class="q-card" id="q-card">
+    <div class="q-top">
+      <span class="q-face" id="q-face">${faceSVG(stage.stage_id, "normal", 58)}</span>
+      <div style="flex:1; min-width:0;">
+        <div class="q-role">${esc(q.speaker_role)}（${esc(stage.manager.name)}の店）</div>
+        <div class="q-topic">${esc(q.topic_tag)}</div>
+      </div>
+    </div>
+    ${consoleHTML(q)}
+    ${isReply ? `
+    <div class="reply-box">
+      <textarea class="reply-input" id="reply-input" placeholder="英語で切り返そう！聞こえた指示にふさわしい一言を" autocomplete="off"></textarea>
+      <div class="reply-row">
+        <button class="btn gold" id="btn-reply-send">切り返す！</button>
+        <button class="mic-btn" id="btn-mic" style="display:none;">🎤 音声</button>
+      </div>
+      <div class="goal-hint">🎯 店長の指示を聞いて、ふさわしい英語で返そう。キーフレーズが入ると一発通過だ。</div>
+    </div>` : `
+    <div class="choices">
+      ${q.choices.map((c) => `<button class="choice-btn" data-choice="${c.id}"><span class="ch-id">${c.id}</span>${esc(c.label)}</button>`).join("")}
+    </div>`}
+    <div class="panic-box" id="panic-box"></div>
+    <div class="pass-box" id="pass-box"></div>
+    <div class="reveal-box" id="reveal-box"></div>
+  </div>`;
+  document.getElementById("session-actions").innerHTML = "";
+  wireConsole(feed, q);
+  if (isReply) {
+    document.getElementById("btn-reply-send").addEventListener("click", onReplySend);
+    document.getElementById("reply-input").addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) onReplySend();
+    });
+    setupMic(document.getElementById("btn-mic"), document.getElementById("reply-input"));
+  } else {
+    feed.querySelectorAll(".choice-btn").forEach((b) =>
+      b.addEventListener("click", () => onChoice(b.dataset.choice, b)));
+  }
+  // 出題と同時に自動再生（早口リスニングがこのアプリの心臓部）
+  setTimeout(() => { if (SES && SES.current === entry) TTS.speak(q.audio_line_en, prog.settings.rate); }, 350);
+  if (SES.timerOn) startTimer(10, onTimeout);
+}
+function setFace(emotion) {
+  const el = document.getElementById("q-face");
+  if (el && SES && SES.current) el.innerHTML = faceSVG(SES.current.stage.stage_id, emotion, 58);
+}
+function noteCardHTML(q) {
+  return `<div class="note-card">
+    <div class="nc-head">📌 ${esc(q.practical_note.headline)}</div>
+    <div class="nc-phrase">${esc(q.practical_note.key_phrase)}</div>
+    <div class="nc-tip">🎧 ${esc(q.practical_note.listening_tip)}</div>
+  </div>`;
+}
+function showActions(html) {
+  document.getElementById("session-actions").innerHTML = html;
+}
+function nextBtnLabel() {
+  if (!SES) return "次へ";
+  if (SES.mode === "endless") return "次のお客さんへ ▶";
+  return SES.idx >= SES.items.length ? "結果を見る ▶" : "次の問題へ ▶";
+}
+function afterResolveActions(extra = "") {
+  showActions(`
+    ${extra}
+    <button class="btn gold big" id="btn-next-q">${nextBtnLabel()}</button>
+    ${SES && SES.mode === "endless" ? `<button class="btn sub" id="btn-end-endless">ここまでで終了</button>` : ""}`);
+  document.getElementById("btn-next-q").addEventListener("click", () => { sfx.click(); nextQuestion(); });
+  const end = document.getElementById("btn-end-endless");
+  if (end) end.addEventListener("click", () => finishSession());
+}
+function handleCorrect() {
+  const { q } = SES.current;
+  SES.locked = true; stopTimer();
+  const firstClear = !qState(q.shift_id).cleared;
+  recordOutcome(q.shift_id, "correct");
+  SES.correct++; SES.answered++;
+  SES.combo++; SES.maxCombo = Math.max(SES.maxCombo, SES.combo);
+  SES.earnedTips += q.tip_reaction.tip_dollars;
+  SES.earnedRep += q.tip_reaction.reputation_up;
+  renderSessionMeta();
+  setFace("happy");
+  sfx.good(); setTimeout(() => sfx.tip(), 120);
+  confetti.burst(80);
+  showTipFx(q.tip_reaction.tip_dollars);
+  const card = document.getElementById("q-card");
+  card.querySelectorAll(".choice-btn").forEach((b) => {
+    if (b.dataset.choice === q.correct_answer.choice_id) b.classList.add("picked-good");
+    b.disabled = true;
+  });
+  const send = document.getElementById("btn-reply-send");
+  if (send) send.disabled = true;
+  const pb = document.getElementById("pass-box");
+  pb.classList.add("show");
+  pb.innerHTML = `
+    <div class="ps-praise">🎉 ${esc(q.tip_reaction.manager_praise)}</div>
+    <div class="ps-gain">
+      <span class="gain-chip">💰 チップ +$${q.tip_reaction.tip_dollars}</span>
+      <span class="gain-chip rep">⭐ 評判 +${q.tip_reaction.reputation_up}</span>
+      ${firstClear ? '<span class="gain-chip rep">📖 フレーズ帳に追加</span>' : ""}
+    </div>
+    <div style="margin-top:10px;">
+      <div style="font-size:11.5px; font-weight:900; color:#146c36;">模範の切り返し（聞いて真似しよう）</div>
+      <div style="font-size:16px; font-weight:800; line-height:1.6; margin-top:2px;">${esc(q.correct_answer.canonical_reply)}</div>
+      <div class="ph-row">
+        <button class="mini-play" id="btn-canon-play">▶ 模範を再生</button>
+        <button class="mini-stop stop-btn" onclick="TTS.stop()">■ 停止</button>
+      </div>
+    </div>
+    ${noteCardHTML(q)}`;
+  document.getElementById("btn-canon-play").addEventListener("click", () =>
+    TTS.speak(q.correct_answer.canonical_reply, prog.settings.rate));
+  refreshSpeakingUI();
+  afterResolveActions();
+}
+function handleWrong(trap, opts = {}) {
+  const { stage, q } = SES.current;
+  SES.fails++;
+  recordOutcome(q.shift_id, "wrong");
+  SES.combo = 0;
+  renderSessionMeta();
+  setFace("scream");
+  sfx.bad();
+  const card = document.getElementById("q-card");
+  card.classList.remove("shake-screen"); void card.offsetWidth; card.classList.add("shake-screen");
+  const pb = document.getElementById("panic-box");
+  pb.classList.add("show");
+  let scene, scream, extra = "";
+  if (opts.timeout) {
+    scene = "⏰ 制限時間切れ！お客さんの行列がざわつき始めた…！";
+    scream = "モタモタするな！聞き直して、次は即答だ！";
+  } else if (trap) {
+    scene = trap.panic_scene; scream = trap.manager_scream;
+  } else {
+    scene = "店内がざわつく…お客さんが「えっ？」と首をかしげている！";
+    scream = `${stage.manager.name}「おい！ポイントがずれているぞ！音声を聞き直して、キーフレーズを意識してもう一度だ！」`;
+    if (q.input_mode === "rush_reply") {
+      const hits = L.familyHits(q, L.normalizeText(document.getElementById("reply-input")?.value || ""));
+      extra = `<div class="goal-hint" style="margin-top:7px;">現在のキーポイント到達：${hits} / ${L.freeNeed(q)}（あと少し！）</div>`;
+    }
+  }
+  pb.innerHTML = `
+    <div class="pb-scene">${esc(scene)}</div>
+    <div class="pb-scream">${esc(scream)}</div>
+    ${extra}
+    <span class="pb-down">📉 店の評判ダウン…</span>`;
+  if (opts.timeout) {
+    SES.locked = true; SES.answered++;
+    afterResolveActions();
+  } else if (SES.fails >= 2) {
+    showActions(`<button class="linklike" id="btn-reveal">答えを見る（チップなし・苦手リスト入り）</button>`);
+    document.getElementById("btn-reveal").addEventListener("click", onReveal);
+  }
+}
+function onReveal() {
+  if (!SES || SES.locked) return;
+  const { q } = SES.current;
+  SES.locked = true; stopTimer();
+  recordOutcome(q.shift_id, "revealed");
+  SES.answered++; SES.combo = 0;
+  renderSessionMeta();
+  setFace("normal");
+  const rb = document.getElementById("reveal-box");
+  rb.classList.add("show");
+  rb.innerHTML = `
+    <div class="rv-label">模範の切り返し</div>
+    <div class="rv-text">${esc(q.correct_answer.canonical_reply)}</div>
+    <div class="ph-row">
+      <button class="mini-play" id="btn-reveal-play">▶ 模範を再生</button>
+      <button class="mini-stop stop-btn" onclick="TTS.stop()">■ 停止</button>
+    </div>
+    ${noteCardHTML(q)}`;
+  document.getElementById("btn-reveal-play").addEventListener("click", () =>
+    TTS.speak(q.correct_answer.canonical_reply, prog.settings.rate));
+  refreshSpeakingUI();
+  afterResolveActions();
+}
+function onChoice(choiceId, btn) {
+  if (!SES || SES.locked) return;
+  const { q } = SES.current;
+  const v = L.judgeChoice(q, choiceId);
+  if (v.result === "correct") { handleCorrect(); return; }
+  btn.classList.add("picked-bad");
+  handleWrong(v.trap);
+}
+function onReplySend() {
+  if (!SES || SES.locked) return;
+  const input = document.getElementById("reply-input");
+  const text = (input.value || "").trim();
+  if (!text) { input.focus(); return; }
+  const { q } = SES.current;
+  const v = L.judgeFreeText(q, text);
+  if (v.result === "correct") { handleCorrect(); return; }
+  handleWrong(v.trap);
+}
+function onTimeout() {
+  if (!SES || SES.locked) return;
+  handleWrong(null, { timeout: true });
+}
+function setupMic(btn, targetInput) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR || !btn) return;
+  btn.style.display = "inline-block";
+  let rec = null;
+  btn.addEventListener("click", () => {
+    if (rec) { try { rec.stop(); } catch (e) {} return; }
+    try {
+      rec = new SR();
+      rec.lang = "en-US"; rec.interimResults = false; rec.maxAlternatives = 1;
+      btn.classList.add("rec"); btn.textContent = "⏹ 録音中…";
+      rec.onresult = (ev) => { targetInput.value = ev.results[0][0].transcript; };
+      rec.onend = () => { rec = null; btn.classList.remove("rec"); btn.textContent = "🎤 音声"; };
+      rec.onerror = rec.onend;
+      rec.start();
+    } catch (e) { rec = null; btn.classList.remove("rec"); btn.textContent = "🎤 音声"; }
+  });
+}
+function finishSession() {
+  if (!SES) { backToTitle(); return; }
+  const s = SES;
+  TTS.stop(); stopTimer();
+  let newRecord = false;
+  if (s.mode === "endless") {
+    prog.endless.plays = (prog.endless.plays || 0) + 1;
+    if (s.earnedTips > (prog.endless.highTips || 0)) { prog.endless.highTips = s.earnedTips; newRecord = true; }
+    if (s.maxCombo > (prog.endless.highCombo || 0)) prog.endless.highCombo = s.maxCombo;
+    saveProg();
+  }
+  const t = earnedTotals();
+  const rank = L.rankFor(t.rep, TOTAL_REP);
+  const modeName = { shift: "シフト", endless: "ランダム連続シフト", review: "苦手克服シフト", srs: "今日の復習" }[s.mode] || "シフト";
+  document.getElementById("result-body").innerHTML = `
+    <div class="result-hero">
+      <div class="rh-title">${s.mode === "endless" ? "🏁 連続シフト終了！" : "🎉 " + esc(modeName) + "完了！"}</div>
+      <div class="rh-tips">獲得チップ <b>$${s.earnedTips}</b>${newRecord ? '<span class="new-record">NEW RECORD!</span>' : ""}</div>
+      <div style="font-weight:800; margin-top:4px;">現在のランク：${esc(rank.title)}</div>
+    </div>
+    <div class="result-rows">
+      <div class="rr-row"><span>正解数</span><span>${s.correct} / ${s.answered} 問</span></div>
+      <div class="rr-row"><span>最大コンボ</span><span>${s.maxCombo} 連続正解</span></div>
+      <div class="rr-row"><span>獲得した評判</span><span>+${s.earnedRep}</span></div>
+      ${s.mode === "endless" ? `<div class="rr-row"><span>ハイスコア（チップ）</span><span>$${prog.endless.highTips}</span></div>` : ""}
+      <div class="rr-row"><span>通算クリア</span><span>${t.cleared} / 24問（チップ $${t.tips}）</span></div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:10px; margin-top:16px;">
+      ${s.mode === "shift" ? `<button class="btn gold big" id="btn-result-again">もう一度このシフト</button>` : ""}
+      <button class="btn big" id="btn-result-map">シフト表へ</button>
+      <button class="btn sub big" id="btn-result-home">タイトルへ</button>
+    </div>`;
+  const again = document.getElementById("btn-result-again");
+  if (again && s.items.length) {
+    again.addEventListener("click", () => {
+      const items = s.items;
+      startSession({ mode: "shift", title: s.title, items, timerOn: prog.settings.ta });
+    });
+  }
+  document.getElementById("btn-result-map").addEventListener("click", () => { renderMap(); showScreen("screen-map"); });
+  document.getElementById("btn-result-home").addEventListener("click", backToTitle);
+  SES = null;
+  showScreen("screen-result");
+  sfx.fanfare();
+}
+
+/* ---------- フレーズ帳 ---------- */
+function renderPhrase() {
+  const cleared = ALL.filter(({ q }) => prog.q[q.shift_id]?.cleared);
+  const list = document.getElementById("phrase-list");
+  if (!cleared.length) {
+    list.innerHTML = `<div class="empty-note">まだクリアした問題がありません。<br>シフトで正解すると、模範フレーズとキーフレーズがここに自動で集まります。</div>`;
+    return;
+  }
+  list.innerHTML = cleared.map(({ stage, q }) => {
+    const keyEn = speakableEn(q.practical_note.key_phrase);
+    return `<div class="phrase-item">
+      <div class="ph-stage">${stage.stage_id} ${esc(stage.workplace)}｜${esc(q.topic_tag)}</div>
+      <div class="ph-reply">${esc(q.correct_answer.canonical_reply)}</div>
+      <div class="ph-key">🔑 ${esc(q.practical_note.key_phrase)}</div>
+      <div class="ph-line">🎧 ${esc(q.audio_line_en)}</div>
+      <div class="ph-row">
+        <button class="mini-play" data-play="${esc(q.correct_answer.canonical_reply)}">▶ 切り返し</button>
+        ${keyEn ? `<button class="mini-play" data-play="${esc(keyEn)}">▶ キーフレーズ</button>` : ""}
+        <button class="mini-play" data-play="${esc(q.audio_line_en)}">▶ セリフ</button>
+      </div>
+    </div>`;
+  }).join("");
+  list.querySelectorAll("[data-play]").forEach((b) =>
+    b.addEventListener("click", () => TTS.speak(b.dataset.play, prog.settings.rate)));
+}
+
+/* ---------- 練習（ディクテーション／シャドーイング） ---------- */
+let practiceEntry = null, practiceMode = "dict";
+function renderPracticeList() {
+  const body = document.getElementById("plist-body");
+  body.innerHTML = CHAPTERS.map((c, ci) => `
+    <div class="chapter-head" style="border-left:6px solid ${CH_COLORS[ci]}; padding-left:10px; font-weight:900; margin:10px 0 8px;">第${c.chapter_id}章 ${esc(c.chapter_title)}</div>
+    ${c.stages.map((st) => `
+      <div style="font-size:12.5px; font-weight:900; color:#8a8171; margin:8px 0 6px;">${st.stage_id} ${esc(st.stage_title)}</div>
+      ${st.shifts.map((q) => {
+        const s = prog.q[q.shift_id];
+        return `<button class="practice-item" data-q="${q.shift_id}">
+          <span class="pi-main">
+            <span class="pi-topic">${esc(q.topic_tag)}</span>
+            <span class="pi-line">🎧 ${esc(q.audio_line_en)}</span>
+          </span>
+          ${s && s.dict ? `<span class="score-badge">✍️ ${s.dict}%</span>` : `<span class="score-badge none">✍️ 未挑戦</span>`}
+          ${s && s.shadow ? `<span class="score-badge">🗣️ ✓</span>` : ""}
+        </button>`;
+      }).join("")}`).join("")}`).join("");
+  body.querySelectorAll(".practice-item").forEach((b) =>
+    b.addEventListener("click", () => { sfx.click(); openPractice(b.dataset.q, "dict"); }));
+}
+function openPractice(qid, mode) {
+  practiceEntry = QMAP.get(qid);
+  practiceMode = mode || "dict";
+  document.getElementById("practice-title").textContent = `練習：${practiceEntry.stage.stage_id}`;
+  renderPractice();
+  showScreen("screen-practice");
+}
+function renderPractice() {
+  const { stage, q } = practiceEntry;
+  document.getElementById("tab-dict").classList.toggle("active", practiceMode === "dict");
+  document.getElementById("tab-shadow").classList.toggle("active", practiceMode === "shadow");
+  const body = document.getElementById("practice-body");
+  const consolePart = `
+  <div class="q-card">
+    <div class="q-top">
+      <span class="q-face">${faceSVG(stage.stage_id, "normal", 58)}</span>
+      <div style="flex:1; min-width:0;">
+        <div class="q-role">${esc(q.speaker_role)}（${esc(stage.manager.name)}の店）</div>
+        <div class="q-topic">${esc(q.topic_tag)}</div>
+      </div>
+    </div>
+    <div class="console">
+      <div class="cs-row">
+        <button class="play-btn" id="pr-play">▶ セリフ再生</button>
+        <button class="stop-btn" id="pr-stop">■ 停止</button>
+        ${speedGroupHTML()}
+      </div>
+    </div>
+    ${practiceMode === "dict" ? `
+    <div class="reply-box">
+      <textarea class="reply-input" id="dict-input" placeholder="聞こえた英語をそのままタイプしよう" autocomplete="off"></textarea>
+      <div class="reply-row"><button class="btn gold" id="btn-dict-check">答え合わせ</button></div>
+      <div class="goal-hint">何度再生してもOK。単語ごとに色分けで結果が出ます。</div>
+    </div>
+    <div class="dict-result" id="dict-result"></div>` : `
+    <div class="step-list">
+      <div class="step-card" id="sh-step1">
+        <div class="sc-head"><span class="sc-no">1</span>まずは聞く</div>
+        <div class="sc-body">上の「▶ セリフ再生」で、店長やお客さんのセリフをよく聞きましょう。速度はコンソールで変えられます。</div>
+        <div class="sc-actions"><button class="btn small" id="btn-sh1">聞いた ✓</button></div>
+      </div>
+      <div class="step-card" id="sh-step2">
+        <div class="sc-head"><span class="sc-no">2</span>声に出してついて唱える</div>
+        <div class="sc-body">再生に少し遅れて、同じように声に出しましょう（シャドーイング）。対応環境では音声認識で照合もできます。</div>
+        <div class="sc-actions">
+          <button class="mic-btn" id="btn-sh-mic" style="display:none; padding:8px 16px;">🎤 認識して照合</button>
+          <button class="btn small" id="btn-sh2">声に出した ✓</button>
+        </div>
+        <div class="sc-body" id="sh-rec-result"></div>
+      </div>
+      <div class="step-card" id="sh-step3">
+        <div class="sc-head"><span class="sc-no">3</span>スクリプトで確認</div>
+        <div class="sc-body">最後に英文と意味を確認して、もう一度唱えると定着します。</div>
+        <div class="sc-actions"><button class="btn small" id="btn-sh3">スクリプトを見る</button></div>
+        <div class="script-box" id="sh-script">${esc(q.audio_line_en)}<br><span style="font-size:13px; color:#5a6a7d;">${esc(q.audio_line_ja)}</span></div>
+      </div>
+    </div>`}
+  </div>`;
+  body.innerHTML = consolePart;
+  wireSpeedGroup(body);
+  document.getElementById("pr-play").addEventListener("click", () => TTS.speak(q.audio_line_en, prog.settings.rate));
+  document.getElementById("pr-stop").addEventListener("click", () => TTS.stop());
+  if (practiceMode === "dict") {
+    document.getElementById("btn-dict-check").addEventListener("click", () => {
+      const input = document.getElementById("dict-input").value || "";
+      const r = L.dictationCheck(q.audio_line_en, input);
+      const st = qState(q.shift_id);
+      if (r.score > (st.dict || 0)) { st.dict = r.score; saveProg(); }
+      const box = document.getElementById("dict-result");
+      box.classList.add("show");
+      box.innerHTML = `
+        <div class="dict-words">${r.tokens.map((t) =>
+          `<span class="${t.ok ? "w-ok" : "w-ng"}">${esc(t.word)}</span>`).join(" ")}</div>
+        ${r.extras.length ? `<div class="dict-extras">余分に聞き取った語：${r.extras.map(esc).join(", ")}</div>` : ""}
+        <div class="dict-score">スコア ${r.score}% （${r.hits}/${r.total}語）${r.score === 100 ? " 🎉 完璧！" : r.score >= 80 ? " あと少し！" : " 繰り返し聞いてみよう"}</div>
+        <div class="goal-hint">正解の文：${esc(q.audio_line_en)}</div>`;
+      if (r.score >= 80) { sfx.good(); } else { sfx.bad(); }
+    });
+  } else {
+    const mark = (id) => document.getElementById(id)?.classList.add("done");
+    document.getElementById("btn-sh1").addEventListener("click", () => { mark("sh-step1"); sfx.click(); });
+    document.getElementById("btn-sh2").addEventListener("click", () => {
+      mark("sh-step2");
+      const st = qState(q.shift_id); st.shadow = true; saveProg(); sfx.good();
+    });
+    document.getElementById("btn-sh3").addEventListener("click", () => {
+      document.getElementById("sh-script").classList.add("show"); mark("sh-step3"); sfx.click();
+    });
+    const micBtn = document.getElementById("btn-sh-mic");
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SR && micBtn) {
+      micBtn.style.display = "inline-block";
+      let rec = null;
+      micBtn.addEventListener("click", () => {
+        if (rec) { try { rec.stop(); } catch (e) {} return; }
+        try {
+          rec = new SR(); rec.lang = "en-US"; rec.interimResults = false;
+          micBtn.classList.add("rec"); micBtn.textContent = "⏹ 録音中…";
+          rec.onresult = (ev) => {
+            const text = ev.results[0][0].transcript;
+            const r = L.dictationCheck(q.audio_line_en, text);
+            document.getElementById("sh-rec-result").innerHTML =
+              `認識結果：「${esc(text)}」<br>セリフとの一致度：<b>${r.score}%</b>（${r.hits}/${r.total}語）`;
+            mark("sh-step2");
+            const st = qState(q.shift_id); st.shadow = true; saveProg();
+          };
+          rec.onend = () => { rec = null; micBtn.classList.remove("rec"); micBtn.textContent = "🎤 認識して照合"; };
+          rec.onerror = rec.onend;
+          rec.start();
+        } catch (e) { rec = null; micBtn.classList.remove("rec"); micBtn.textContent = "🎤 認識して照合"; }
+      });
+    }
+  }
+}
+
+/* ---------- 画面遷移の配線 ---------- */
+function backToTitle() { renderTitle(); showScreen("screen-title"); }
+document.getElementById("btn-to-map").addEventListener("click", () => { sfx.click(); renderMap(); showScreen("screen-map"); });
+document.getElementById("btn-map-back").addEventListener("click", backToTitle);
+document.getElementById("btn-intro-back").addEventListener("click", () => { renderMap(); showScreen("screen-map"); });
+document.getElementById("btn-to-howto").addEventListener("click", () => { sfx.click(); showScreen("screen-howto"); });
+document.getElementById("btn-howto-back").addEventListener("click", backToTitle);
+document.getElementById("btn-result-title").addEventListener("click", backToTitle);
+document.getElementById("btn-session-quit").addEventListener("click", () => { SES = null; backToTitle(); });
+document.getElementById("btn-to-endless").addEventListener("click", () => {
+  sfx.click();
+  startSession({ mode: "endless", title: "🎲 ランダム連続シフト", items: ALL, timerOn: prog.settings.ta });
+});
+document.getElementById("btn-to-srs").addEventListener("click", () => {
+  const items = dueList();
+  if (!items.length) { showEmptySession("📅 今日の復習", "今日の復習はまだありません。<br>シフトで問題を解くと、翌日以降に復習が届きます。"); return; }
+  sfx.click();
+  startSession({ mode: "srs", title: "📅 今日の復習", items, timerOn: false });
+});
+document.getElementById("btn-to-review").addEventListener("click", () => {
+  const items = reviewList();
+  if (!items.length) { showEmptySession("🔥 苦手克服シフト", "苦手リストは空っぽです。いい調子！<br>間違えた問題が出たら、ここに自動で集まります。"); return; }
+  sfx.click();
+  startSession({ mode: "review", title: "🔥 苦手克服シフト", items, timerOn: false });
+});
+document.getElementById("btn-to-phrase").addEventListener("click", () => { sfx.click(); renderPhrase(); showScreen("screen-phrase"); });
+document.getElementById("btn-phrase-back").addEventListener("click", backToTitle);
+document.getElementById("btn-to-practice").addEventListener("click", () => { sfx.click(); renderPracticeList(); showScreen("screen-practice-list"); });
+document.getElementById("btn-plist-back").addEventListener("click", backToTitle);
+document.getElementById("btn-practice-back").addEventListener("click", () => { renderPracticeList(); showScreen("screen-practice-list"); });
+document.getElementById("tab-dict").addEventListener("click", () => { practiceMode = "dict"; renderPractice(); });
+document.getElementById("tab-shadow").addEventListener("click", () => { practiceMode = "shadow"; renderPractice(); });
+document.querySelectorAll("#level-bar .level-chip").forEach((ch) =>
+  ch.addEventListener("click", () => { levelFilter = ch.dataset.level; sfx.click(); renderMap(); }));
+document.getElementById("phrase-stop").addEventListener("click", () => TTS.stop());
+document.getElementById("phrase-speed").innerHTML = SPEEDS.map((r) =>
+  `<button class="speed-btn ${Math.abs((prog.settings.rate || 1.25) - r) < 0.001 ? "active" : ""}" data-rate="${r}">${r.toFixed(2)}x</button>`).join("");
+wireSpeedGroup(document.getElementById("phrase-speed").parentElement);
+
+/* タイトル画面にタイムアタック切替を追加 */
+(() => {
+  const row = document.createElement("label");
+  row.className = "toggle-row";
+  row.style.maxWidth = "360px"; row.style.margin = "12px auto 0"; row.style.width = "100%";
+  row.innerHTML = `⏱️ 10秒制限タイムアタック（連続シフト等）
+    <span class="spacer"></span>
+    <span class="switch"><input type="checkbox" id="ta-toggle-title" ${prog.settings.ta ? "checked" : ""}><span class="sl"></span></span>`;
+  const foot = document.querySelector("#screen-title .title-foot");
+  foot.parentElement.insertBefore(row, foot);
+  row.querySelector("input").addEventListener("change", (e) => { prog.settings.ta = e.target.checked; saveProg(); });
+})();
+
+/* ---------- 初期化 ---------- */
+TTS.init();
+refreshSoundToggles();
+renderTitle();
+showScreen("screen-title");
+</script>
+</body>
+</html>
